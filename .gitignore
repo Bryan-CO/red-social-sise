@@ -3,3 +3,6 @@ node_modules/
 
 # Archivo de la BD
 bd_red_social.sql
+
+# Archivo de configuración del Vs Code
+.vscode/
