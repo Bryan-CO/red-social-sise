@@ -6,8 +6,9 @@ import { corsMiddleware } from './middlewares/cors.js';
 const app = express();
 const PORT = process.env.PORT ?? 1234;
 
-app.use('/users', userRouter);
-
+app.use(express.json());
 app.use(corsMiddleware());
+app.use('/users', userRouter);
 app.use(status404());
+
 app.listen(PORT, () => console.log(`App escuchando en http://localhost:${PORT}`));
