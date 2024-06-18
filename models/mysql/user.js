@@ -12,10 +12,17 @@ const connection = await mysql.createConnection(config);
 
 export class UserModel {
     static async getAll(){
-        return {status: 200, message: "Se listaron los usuarios xd"};
+        const [users] = await connection.query(
+            'SELECT idusuario, alias, nombre, apellido, email, contraseña, rutaAvatar from TB_Usuario;'
+        )
+        return users;
     }
-    static async getById(){
+    static async getById({ id }){
+        const [user] = await connection.query(
+            'SELECT idusuario, alias, nombre, apellido, email, contraseña, rutaAvatar from TB_Usuario WHERE IdUsuario = ?', [id]
+        )
 
+        return user;
     }
     static async create({ input }){
         const{
@@ -29,7 +36,7 @@ export class UserModel {
 
         const result = await connection.query(
             `INSERT INTO tb_usuario (Alias, Nombre, Apellido, Email, Contraseña, RutaAvatar) VALUES
-(?, ?, ?, ?, ?, ?);`,[alias, nombre, apellido, email, contraseña, rutaAvatar]
+            (?, ?, ?, ?, ?, ?);`,[alias, nombre, apellido, email, contraseña, rutaAvatar]
         );
 
         // const newUser = {
@@ -38,10 +45,10 @@ export class UserModel {
         //     ...input
         // }
         
-        console.log(result);
+        return input;
     }
-    static async update(){
-
+    static async update({ id, input }){
+        
     }
     static async delete(){
 
