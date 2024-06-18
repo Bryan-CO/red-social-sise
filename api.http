@@ -6,6 +6,16 @@ GET http://localhost:1234/users/1
 
 ### Creando un alumno
 POST http://localhost:1234/users
+Content-Type: application/json
+
+{
+    "alias": "arrozconhuevofrito123",
+    "nombre": "Juan",
+    "apellido": "Pérez",
+    "email": "lcabello123@gmail.com",
+    "contraseña": "callate",
+    "rutaAvatar": "http://rutaimagen.jpg"
+}
 
 ### Actualizando un alumno:
 PATCH http://localhost:1234/users/1
