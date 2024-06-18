@@ -1,0 +1,5 @@
+# Ignorar dependencias
+node_modules/
+
+# Archivo de la BD
+bd_red_social.sql
