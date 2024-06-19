@@ -1,0 +1,29 @@
+### Obtener todos los usuarios
+GET http://localhost:1234/users
+
+### Obtener usuario por ID
+GET http://localhost:1234/users/1
+
+### Crear un usuario
+POST http://localhost:1234/users
+Content-Type: application/json
+
+{
+    "alias": "_arrozconhuevofrito123_",
+    "nombre": "Luis Bryan",
+    "apellido": "Cabello Ortiz",
+    "email": "asdasdasdasdasas",
+    "contraseña": "12345",
+    "rutaAvatar": "https://rutaxd/avatars/ola.webp"
+}
+
+### Actualizar un usuario
+PATCH http://localhost:1234/users/15
+Content-Type: application/json
+
+{
+    "alias": "arrozconpollo"
+}
+
+### Borrar usuario de forma lógica
+DELETE http://localhost:1234/users/6
