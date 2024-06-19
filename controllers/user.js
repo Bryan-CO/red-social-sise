@@ -3,11 +3,14 @@ import { validatePartialUser, validateUser } from '../schemas/user.js';
 
 export class UserController {
 
+    // GET ALL
     static async getAll(req, res) {
         const users = await UserModel.getAll();
         res.status(200).json(users);
     }
 
+
+    // GET BY ID
     static async getById(req, res) {
         const { id } = req.params;
         const user = await UserModel.getById({id});
@@ -15,11 +18,10 @@ export class UserController {
         res.status(404).json({message:'User not found uu'});
     }
     
+
+    // CREATE
     static async create(req, res) {
         const result = validateUser(req.body);
-
-    // Console.log(JSON.parse(result)); Esto no, porque el JSON.parse sirve para convertir un JSON a un objeto
-
         if (result.error) {
             return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
@@ -27,6 +29,9 @@ export class UserController {
         res.status(201).json(newUser);
     }
 
+
+
+    // UPDATE
     static async update(req, res) {
         const{ id } = req.params;
         const result = validatePartialUser(req.body);
@@ -39,5 +44,15 @@ export class UserController {
 
         if(!updateUser) return res.status(404).json({message: 'Usuario not found uu'});
         res.status(200).json(updateUser);
+    }
+
+
+    // DELETE (Logic)
+    static async delete (req, res){
+        const { id } = req.params;
+        const success = await UserModel.delete({ id });
+        if (!success) return res.status(404).json({message: "Usuario not found uu"});
+
+        res.status(200).json({message: "Usuario borrado correctamente!"});
     }
 }
