@@ -1,45 +1,70 @@
-import { validateComment, validatePartialComment} from '../schemas/comment.js'
+import { validateComment, validatePartialComment } from '../schemas/comment.js';
 import { CommentModel } from '../models/mysql/comment.js';
+import { ResponseModel } from '../utils/Response.js';
 
 export class CommentController {
-    static async getAll(req, res) {
+
+    // GET ALL COMMENTS BY PUBLICATION ID
+    static async getAll(req, res, next) {
         const { id } = req.params;
-        const pubs = await CommentModel.getAll({ id });
-        res.status(200).json(pubs);
+
+        try {
+            const comments = await CommentModel.getAll({ id });
+            res.status(200).json(ResponseModel.success(comments, 'Comentarios obtenidos correctamente'));
+        } catch (error) {
+            next(error)
+        }
     }
 
-    // CREATE COMMENT
-    static async create(req, res) {
+    // CREATE NEW COMMENT FOR A PUBLICATION
+    static async create(req, res, next) {
         const { id } = req.params;
         const result = validateComment(req.body);
+
         if (result.error) {
-            return res.status(400).json({ error: JSON.parse(result.error.message) })
+            return res.status(400).json(ResponseModel.error('Validación fallida', 400, JSON.parse(result.error.message)));
         }
-        const newComment = await CommentModel.create({ id, input: result.data });
-        res.status(201).json(newComment);
+
+        try {
+            const newComment = await CommentModel.create({ id, input: result.data });
+            res.status(201).json(ResponseModel.success(newComment, 'Comentario creado correctamente', 201));
+        } catch (error) {
+            next(error);
+        }
     }
 
     // UPDATE COMMENT
-    static async update(req, res) {
-        const{ idComment } = req.params;
+    static async update(req, res, next) {
+        const { idComment } = req.params;
         const result = validatePartialComment(req.body);
 
         if (result.error) {
-            return res.status(400).json({ error: JSON.parse(result.error.message) })
+            return res.status(400).json(ResponseModel.error('Validación fallida', 400, JSON.parse(result.error.message)));
         }
 
-        const updateComment = await CommentModel.update({idComment, input: result.data});
-
-        if(!updateComment) return res.status(404).json({message: 'Publication not found uu'});
-        res.status(200).json(updateComment);
+        try {
+            const updateComment = await CommentModel.update({ idComment, input: result.data });
+            if (!updateComment) {
+                return res.status(404).json(ResponseModel.error('Comentario no encontrado', 404));
+            }
+            res.status(200).json(ResponseModel.success(updateComment, 'Comentario actualizado correctamente'));
+        } catch (error) {
+            next(error);
+        }
     }
 
     // DELETE COMMENT (Logic)
-    static async delete(req, res){
+    static async delete(req, res, next) {
         const { idComment } = req.params;
-        const success = await CommentModel.delete({ idComment });
-        if (!success) return res.status(404).json({message: "Publication not found uu"});
 
-        res.status(200).json({message: "Publicación borrada correctamente!"});
+        try {
+            const success = await CommentModel.delete({ idComment });
+            if (!success) {
+                return res.status(404).json(ResponseModel.error('Comentario no encontrado', 404));
+            }
+            res.status(200).json(ResponseModel.success(null, 'Comentario eliminado correctamente'));
+        } catch (error) {
+            next(error);
+        }
     }
 }

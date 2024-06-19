@@ -4,56 +4,79 @@ import { validateReaction} from '../schemas/reaction.js'
 export class ReactionController {
 
     // GET ALL
-    static async getAll(req, res) {
-        const pubs = await ReactionModel.getAll();
-        res.status(200).json(pubs);
+    static async getAll(req, res, next) {
+        try {
+            const reactions = await ReactionModel.getAll();
+            res.status(200).json(ResponseModel.success(reactions, 'Reacciones obtenidas correctamente'));
+        } catch (error) {
+            next(error);
+        }
     }
 
-
-    // GET BY ID
-    static async getById(req, res) {
+    // GET REACTION BY ID
+    static async getById(req, res, next) {
         const { id, idReaction } = req.params;
-        const reactions = await ReactionModel.getById({ id, idReaction });
-        if (reactions.length != 0) return res.json(reactions);
-        res.status(404).json({message:"Publication don't exists"});
-    }
-    
 
-    // CREATE
-    static async create(req, res) {
+        try {
+            const reactions = await ReactionModel.getById({ id, idReaction });
+            if (reactions.length !== 0) {
+                res.json(ResponseModel.success(reactions, 'Reacción obtenida correctamente'));
+            } else {
+                res.status(404).json(ResponseModel.error("La reacción no existe", 404));
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // CREATE NEW REACTION
+    static async create(req, res, next) {
         const { id } = req.params;
         const result = validateReaction(req.body);
         if (result.error) {
-            return res.status(400).json({ error: JSON.parse(result.error.message) })
+            return res.status(400).json(ResponseModel.error('Validación fallida', 400, JSON.parse(result.error.message)));
         }
-        const newReaction =  await ReactionModel.create({ id, input: result.data });
-        res.status(201).json(newReaction);
+
+        try {
+            const newReaction = await ReactionModel.create({ id, input: result.data });
+            res.status(201).json(ResponseModel.success(newReaction, 'Reacción creada correctamente', 201));
+        } catch (error) {
+            next(error);
+        }
     }
 
-
-
-    // UPDATE
-    static async update(req, res) {
-        const{ id } = req.params;
-        const result = validatePartialPublication(req.body);
+    // UPDATE REACTION
+    static async update(req, res, next) {
+        const { id } = req.params;
+        const result = validateReaction(req.body);
 
         if (result.error) {
-            return res.status(400).json({ error: JSON.parse(result.error.message) })
+            return res.status(400).json(ResponseModel.error('Validación fallida', 400, JSON.parse(result.error.message)));
         }
 
-        const updatePub = await PublicationModel.update({id, input: result.data});
-
-        if(!updatePub) return res.status(404).json({message: 'Publication not found uu'});
-        res.status(200).json(updatePub);
+        try {
+            const updateReaction = await ReactionModel.update({ id, input: result.data });
+            if (!updateReaction) {
+                return res.status(404).json(ResponseModel.error('Reacción no encontrada', 404));
+            }
+            res.status(200).json(ResponseModel.success(updateReaction, 'Reacción actualizada correctamente'));
+        } catch (error) {
+            next(error);
+        }
     }
 
-
-    // DELETE (Logic)
-    static async delete (req, res){
+    // DELETE REACTION (Logic)
+    static async delete(req, res, next) {
         const { id } = req.params;
-        const success = await PublicationModel.delete({ id });
-        if (!success) return res.status(404).json({message: "Publication not found uu"});
 
-        res.status(200).json({message: "Publicación borrada correctamente!"});
+        try {
+            const success = await ReactionModel.delete({ id });
+            if (!success) {
+                return res.status(404).json(ResponseModel.error('Reacción no encontrada', 404));
+            }
+            res.status(200).json(ResponseModel.success(null, 'Reacción eliminada correctamente'));
+        } catch (error) {
+            next(error);
+        }
     }
 }

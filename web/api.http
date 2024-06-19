@@ -37,7 +37,7 @@ DELETE http://localhost:1234/users/cda230ac-2e3d-11ef-8238-50ebf6283cbf123
 GET http://localhost:1234/publications
 
 ### Obtener publicación por ID
-GET http://localhost:1234/publications/1
+GET http://localhost:1234/publications/100
 
 ### Crear una publicación
 POST http://localhost:1234/publications
