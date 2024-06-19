@@ -4,10 +4,13 @@
         "host": "localhost",
         "user": "root",
         "password": "mysqladmin",
-        "database": "RED_SOCIAL"
+        "database": "db_rsic_echoes"
+      },
+      "server": {
+        "port": 1234
       }
     },
-    
+
     "production": {
       "db": {
         "host": "prod-db-server",
