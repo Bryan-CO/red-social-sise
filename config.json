@@ -1,0 +1,20 @@
+{
+    "development": {
+      "db": {
+        "host": "localhost",
+        "user": "root",
+        "password": "mysqladmin",
+        "database": "RED_SOCIAL"
+      }
+    },
+    
+    "production": {
+      "db": {
+        "host": "prod-db-server",
+        "user": "prod_user",
+        "password": "prod_pass",
+        "database": "RED_SOCIAL"
+      }
+    }
+  }
+  
