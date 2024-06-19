@@ -10,7 +10,7 @@ export class UserModel {
     // GET ALL
     static async getAll(){
         const [users] = await connection.query(
-            'SELECT idusuario, alias, nombre, apellido, email, contrasena, rutaAvatar from Usuarios;'
+            'SELECT * FROM VW_USU_SEL_ALL_ACTIVE;'
         )
         return users;
     }
@@ -18,7 +18,7 @@ export class UserModel {
     // GET BY ID
     static async getById({ id }){
         const [user] = await connection.query(
-            'SELECT idusuario, alias, nombre, apellido, email, contrasena, rutaAvatar from Usuarios WHERE IdUsuario = ?', [id]
+            'SELECT * FROM VW_USU_SEL_ALL_ACTIVE WHERE ID = ?', [id]
         )
         return user;
     }
@@ -34,13 +34,18 @@ export class UserModel {
             rutaAvatar
         } = input;
 
-        const result = await connection.query(
-            `INSERT INTO Usuarios (Alias, Nombre, Apellido, Email, Contrasena, RutaAvatar) VALUES
-            (?, ?, ?, ?, ?, ?);`,[alias, nombre, apellido, email, contraseña, rutaAvatar]
+        const [uuidResult] = await connection.query(
+            'SELECT UUID() uuid;'
+        );
+
+        const [{uuid}] = uuidResult;
+
+        await connection.query(
+            `CALL SP_USU_INS1_Registrar (UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?);`,[uuid, alias, nombre, apellido, email, contraseña, rutaAvatar]
         );
 
         const newUser = {
-            id: result[0].insertId,
+            id: uuid,
             ...input
         }
         
@@ -59,14 +64,14 @@ export class UserModel {
         } = input;
 
         const [result] = await connection.query(
-            'UPDATE Usuarios SET alias = IFNULL(?, alias), nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), email = IFNULL(?, email), contrasena = IFNULL(?, contrasena), rutaAvatar = IFNULL(?, rutaAvatar) WHERE IDUsuario = ?',
-            [alias, nombre, apellido, email, contraseña, rutaAvatar, id]
+            'CALL SP_USU_UPD2_ActDetalle (UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?)',
+            [id, alias, nombre, apellido, email, contraseña, rutaAvatar]
         );
 
         if (result.affectedRows === 0) return false;
 
         const[user] = await connection.query(
-            'SELECT idusuario, alias, nombre, apellido, email, contrasena, rutaAvatar from Usuarios WHERE IdUsuario = ?', [id]
+            'SELECT * FROM VW_USU_SEL_ALL_ACTIVE WHERE ID = ?', [id]
         );
         return user;
 
@@ -75,7 +80,7 @@ export class UserModel {
     // DELETE
     static async delete({ id }){
         const [result] = await connection.query(
-            'UPDATE Usuarios SET RgStatus = 0 WHERE IdUsuario = ?', [id]
+            'CALL SP_USU_DEL1_Inhabilitar(UUID_TO_BIN(?))', [id]
         );
 
         return (result.affectedRows === 1);

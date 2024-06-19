@@ -3,6 +3,9 @@ import { userRouter } from './routes/user.js';
 import { status404 } from './middlewares/status404.js';
 import { corsMiddleware } from './middlewares/cors.js';
 import { createRequire } from 'node:module';
+import { publicacionRouter } from './routes/publication.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+
 const require = createRequire(import.meta.url);
 const config = require('./config.json');
 
@@ -12,6 +15,9 @@ const PORT = config.development.server.port ?? 3000;
 app.use(express.json());
 app.use(corsMiddleware());
 app.use('/users', userRouter);
+app.use('/publications', publicacionRouter);
 app.use(status404());
+app.use(errorHandler);
+
 
 app.listen(PORT, () => console.log(`App escuchando en http://localhost:${PORT}`));

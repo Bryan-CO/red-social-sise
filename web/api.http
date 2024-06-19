@@ -2,28 +2,106 @@
 GET http://localhost:1234/users
 
 ### Obtener usuario por ID
-GET http://localhost:1234/users/1
+GET http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf
 
 ### Crear un usuario
 POST http://localhost:1234/users
 Content-Type: application/json
 
 {
-    "alias": "_arrozconhuevofrito123_",
+    "alias": "lcabelloo",
     "nombre": "Luis Bryan",
     "apellido": "Cabello Ortiz",
-    "email": "asdasdasdasdasas",
+    "email": "lcasd",
     "contraseña": "12345",
-    "rutaAvatar": "https://rutaxd/avatars/ola.webp"
+    "rutaAvatar": "http://avatars/arroz.jpg"
 }
 
 ### Actualizar un usuario
-PATCH http://localhost:1234/users/15
+PATCH http://localhost:1234/users/cda230ac-2e3d-11ef-8238-50ebf6283cbf
 Content-Type: application/json
 
 {
-    "alias": "arrozconpollo"
+    "email": "lbco@gmail.com"
 }
 
 ### Borrar usuario de forma lógica
-DELETE http://localhost:1234/users/6
+DELETE http://localhost:1234/users/cda230ac-2e3d-11ef-8238-50ebf6283cbf123
+
+
+
+###############################################################################
+### PUBLICACIONES
+
+### Listar todas las publicaciones
+GET http://localhost:1234/publications
+
+### Obtener publicación por ID
+GET http://localhost:1234/publications/1
+
+### Crear una publicación
+POST http://localhost:1234/publications
+Content-Type: application/json
+
+{
+    "uuid_usuario": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
+    "contenido": "OLAAAAAA"
+}
+
+### Actualizar una publicación
+PATCH http://localhost:1234/publications/13
+Content-Type: application/json
+
+{
+    "contenido": "Saluden uu"
+}
+
+
+### Borrar una publicación
+DELETE http://localhost:1234/publications/13
+
+
+
+
+
+###############################################################################
+### COMENTARIOS AYUDA
+
+### Listar los comentarios de una publicacion
+GET http://localhost:1234/publications/2/comments
+
+
+### Crear un comentario
+POST http://localhost:1234/publications/2/comments
+Content-Type: application/json
+
+{
+    "uuid_usuario": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
+    "contenido": "Que bien uwu"
+}
+
+### Actualizar un comentario
+PATCH http://localhost:1234/publications/1/comments/11
+Content-Type: application/json
+
+{
+    "contenido": "que mal :("
+}
+
+### Borrar un comentario
+DELETE http://localhost:1234/publications/1/comments/11
+
+
+#############################################################
+### REACCIONES
+
+GET http://localhost:1234/publications/11/reactions/3
+
+### Añadir una nueva reaccion
+POST http://localhost:1234/publications/11/reactions
+Content-Type: application/json
+
+{
+    "user_uuid": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
+    "reaction_id": 3
+}
