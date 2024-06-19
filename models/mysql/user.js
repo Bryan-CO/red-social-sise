@@ -1,21 +1,16 @@
 import { randomUUID } from 'node:crypto';
 import mysql from 'mysql2/promise.js';
+import config from '../../config.json' with { type:'json' };
 
-const config = {
-    host: 'localhost',
-    user: 'root',
-    password: 'mysqladmin',
-    database: 'RED_SOCIAL'
-}
 
-const connection = await mysql.createConnection(config);
+const connection = await mysql.createConnection(config.development.db);
 
 export class UserModel {
 
     // GET ALL
     static async getAll(){
         const [users] = await connection.query(
-            'SELECT idusuario, alias, nombre, apellido, email, contraseña, rutaAvatar from TB_Usuario;'
+            'SELECT idusuario, alias, nombre, apellido, email, contrasena, rutaAvatar from Usuarios;'
         )
         return users;
     }
@@ -23,7 +18,7 @@ export class UserModel {
     // GET BY ID
     static async getById({ id }){
         const [user] = await connection.query(
-            'SELECT idusuario, alias, nombre, apellido, email, contraseña, rutaAvatar from TB_Usuario WHERE IdUsuario = ?', [id]
+            'SELECT idusuario, alias, nombre, apellido, email, contrasena, rutaAvatar from Usuarios WHERE IdUsuario = ?', [id]
         )
         return user;
     }
@@ -40,7 +35,7 @@ export class UserModel {
         } = input;
 
         const result = await connection.query(
-            `INSERT INTO tb_usuario (Alias, Nombre, Apellido, Email, Contraseña, RutaAvatar) VALUES
+            `INSERT INTO Usuarios (Alias, Nombre, Apellido, Email, Contrasena, RutaAvatar) VALUES
             (?, ?, ?, ?, ?, ?);`,[alias, nombre, apellido, email, contraseña, rutaAvatar]
         );
 
@@ -64,14 +59,14 @@ export class UserModel {
         } = input;
 
         const [result] = await connection.query(
-            'UPDATE TB_USUARIO SET alias = IFNULL(?, alias), nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), email = IFNULL(?, email), contraseña = IFNULL(?, contraseña), rutaAvatar = IFNULL(?, rutaAvatar) WHERE IDUsuario = ?',
+            'UPDATE Usuarios SET alias = IFNULL(?, alias), nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), email = IFNULL(?, email), contrasena = IFNULL(?, contrasena), rutaAvatar = IFNULL(?, rutaAvatar) WHERE IDUsuario = ?',
             [alias, nombre, apellido, email, contraseña, rutaAvatar, id]
         );
 
         if (result.affectedRows === 0) return false;
 
         const[user] = await connection.query(
-            'SELECT idusuario, alias, nombre, apellido, email, contraseña, rutaAvatar from TB_Usuario WHERE IdUsuario = ?', [id]
+            'SELECT idusuario, alias, nombre, apellido, email, contrasena, rutaAvatar from Usuarios WHERE IdUsuario = ?', [id]
         );
         return user;
 
@@ -80,7 +75,7 @@ export class UserModel {
     // DELETE
     static async delete({ id }){
         const [result] = await connection.query(
-            'UPDATE TB_USUARIO SET RgStatus = 0 WHERE IdUsuario = ?', [id]
+            'UPDATE Usuarios SET RgStatus = 0 WHERE IdUsuario = ?', [id]
         );
 
         return (result.affectedRows === 1);
