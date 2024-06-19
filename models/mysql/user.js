@@ -78,7 +78,11 @@ export class UserModel {
     }
 
     // DELETE
-    static async delete({id}){
-        
+    static async delete({ id }){
+        const [result] = await connection.query(
+            'UPDATE TB_USUARIO SET RgStatus = 0 WHERE IdUsuario = ?', [id]
+        );
+
+        return (result.affectedRows === 1);
     }
 }
