@@ -5,14 +5,14 @@ export class UserController {
 
     static async getAll(req, res) {
         const users = await UserModel.getAll();
-        res.json(users);
+        res.status(200).json(users);
     }
 
     static async getById(req, res) {
         const { id } = req.params;
         const user = await UserModel.getById({id});
         if (user.length != 0) return res.json(user);
-        res.json({message:'User not found uu'});
+        res.status(404).json({message:'User not found uu'});
     }
     
     static async create(req, res) {
@@ -35,7 +35,9 @@ export class UserController {
             return res.status(400).json({ error: JSON.parse(result.error.message) })
         }
 
-        const updateUser = UserModel.update({id, input: result.data});
-        res.json(updateUser);
+        const updateUser = await UserModel.update({id, input: result.data});
+
+        if(!updateUser) return res.status(404).json({message: 'Usuario not found uu'});
+        res.status(200).json(updateUser);
     }
 }
