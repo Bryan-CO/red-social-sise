@@ -23,6 +23,8 @@ publicacionRouter.patch('/:id/comments/:idComment', CommentController.update);
 
 publicacionRouter.delete('/:id/comments/:idComment', CommentController.delete);
 
+publicacionRouter.get('/:id/reactions/', ReactionController.getAllById)
+
 publicacionRouter.get('/:id/reactions/:idReaction', ReactionController.getById)
 
 publicacionRouter.post('/:id/reactions', ReactionController.create)

@@ -28,7 +28,7 @@ export class CommentModel {
         );
 
         const [newComment] = await connection.query(
-            'SELECT * FROM PublicacionComentarios WHERE IdComentario = LAST_INSERT_ID()'
+            'CALL SP_COM_SEL1_ByID(LAST_INSERT_ID());'
         );
         
         return newComment;
@@ -50,7 +50,7 @@ export class CommentModel {
         if (result.affectedRows === 0) return false;
 
         const[comment] = await connection.query(
-            'SELECT * FROM PublicacionComentarios WHERE IdComentario = ?', [idComment]
+            'CALL SP_COM_SEL1_ByID(?);', [idComment]
         );
         return comment;
 

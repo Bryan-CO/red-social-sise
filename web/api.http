@@ -12,21 +12,21 @@ Content-Type: application/json
     "alias": "lcabelloo",
     "nombre": "Luis Bryan",
     "apellido": "Cabello Ortiz",
-    "email": "lcasd",
+    "email": "lcasd@gmail.com",
     "contraseña": "12345",
     "rutaAvatar": "http://avatars/arroz.jpg"
 }
 
 ### Actualizar un usuario
-PATCH http://localhost:1234/users/cda230ac-2e3d-11ef-8238-50ebf6283cbf
+PATCH http://localhost:1234/users/ee2e39bc-2e94-11ef-95a9-50ebf6283cbf
 Content-Type: application/json
 
 {
-    "email": "lbco@gmail.com"
+    "email": "lbco123@gmail.com"
 }
 
 ### Borrar usuario de forma lógica
-DELETE http://localhost:1234/users/cda230ac-2e3d-11ef-8238-50ebf6283cbf123
+DELETE http://localhost:1234/users/ee2e39bc-2e94-11ef-95a9-50ebf6283cbf
 
 
 
@@ -37,7 +37,7 @@ DELETE http://localhost:1234/users/cda230ac-2e3d-11ef-8238-50ebf6283cbf123
 GET http://localhost:1234/publications
 
 ### Obtener publicación por ID
-GET http://localhost:1234/publications/100
+GET http://localhost:1234/publications/13
 
 ### Crear una publicación
 POST http://localhost:1234/publications
@@ -95,13 +95,17 @@ DELETE http://localhost:1234/publications/1/comments/11
 #############################################################
 ### REACCIONES
 
-GET http://localhost:1234/publications/11/reactions/3
+### Obtener todas las reacciones de una publicación
+GET http://localhost:1234/publications/1/reactions
+
+### Obtener reaccion por publicacion y tipo
+GET http://localhost:1234/publications/1/reactions/1
 
 ### Añadir una nueva reaccion
-POST http://localhost:1234/publications/11/reactions
+POST http://localhost:1234/publications/1/reactions
 Content-Type: application/json
 
 {
-    "user_uuid": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
-    "reaction_id": 3
+    "user_uuid": "b126ee51-2e39-11ef-8238-50ebf6283cbf",
+    "reaction_id": 5
 }

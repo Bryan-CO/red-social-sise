@@ -8,4 +8,4 @@ bd_red_social.sql
 .vscode/
 
 # Prueba de API
-web/
+web/api.http

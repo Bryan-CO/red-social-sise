@@ -11,15 +11,18 @@ export class PublicationModel {
         const [pubs] = await connection.query(
             'SELECT * FROM VW_PUB_SEL1_Lista;'
         )
-        
+        const result = [];
 
-        // pubs.forEach(async pub => {
-        //     const [reacciones] = await connection.
-        // query('SELECT TRC.IDTipoReaccion, TRC.Nombre, CRC.Cant FROM CantReacciones CRC INNER JOIN TipoReacciones TRC ON TRC.IDTipoReaccion = CRC.IDTipoReaccion WHERE CRC.IDPublicacion = ? ORDER BY CRC.Cant DESC;', 20);
-        //     pub.Reacciones = reacciones[0];
-        // })
-        // console.log('xd');
-        return pubs;
+        for (const pub of pubs){
+            const reacciones = await connection.query('SELECT RCT.IdTipoReaccion, RCT.Nombre, CTRC.Cant FROM cantreacciones CTRC INNER JOIN tiporeacciones RCT ON CTRC.IdTipoReaccion = RCT.IdTipoReaccion WHERE CTRC.IdPublicacion = ?;', [pub.IdPublicacion])
+
+
+            result.push({
+                ...pub,
+                Reacciones: reacciones[0]
+            });
+        }
+        return result;  
     }
 
     // GET BY ID

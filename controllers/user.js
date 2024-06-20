@@ -55,7 +55,7 @@ export class UserController {
         const updateUser = await UserModel.update({id, input: result.data});
 
         if(!updateUser) return res.status(404).json(ResponseModel.error('Usuario no encontrado', 404));
-        res.status(200).json(ResponseModel.success(newUser, 'Usuario actualizado correctamente!'));
+        res.status(200).json(ResponseModel.success(updateUser, 'Usuario actualizado correctamente!'));
     }
 
 

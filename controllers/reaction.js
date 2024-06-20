@@ -1,12 +1,14 @@
 import { ReactionModel } from '../models/mysql/reaction.js';
 import { validateReaction} from '../schemas/reaction.js'
+import { ResponseModel } from '../utils/Response.js';
 
 export class ReactionController {
 
     // GET ALL
-    static async getAll(req, res, next) {
+    static async getAllById(req, res, next) {
         try {
-            const reactions = await ReactionModel.getAll();
+            const{id} = req.params;
+            const reactions = await ReactionModel.getAllById({id});
             res.status(200).json(ResponseModel.success(reactions, 'Reacciones obtenidas correctamente'));
         } catch (error) {
             next(error);

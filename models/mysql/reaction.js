@@ -7,9 +7,9 @@ const connection = await mysql.createConnection(config.development.db);
 export class ReactionModel {
 
     // GET ALL
-    static async getAll(){
+    static async getAllById({id}){
         const [pubs] = await connection.query(
-            'SELECT * FROM VW_PUB_SEL1_Lista;'
+            'SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Alias, USU.rutaAvatar, PBRC.IdTipoReaccion, RCT.Nombre from publicacionreacciones PBRC INNER JOIN usuarios USU ON USU.IdUsuario = PBRC.IdUsuario INNER JOIN tiporeacciones RCT ON RCT.IdTipoReaccion = PBRC.IdTipoReaccion WHERE PBRC.IdPublicacion = ?;', [id]
         )
         
 
@@ -18,7 +18,7 @@ export class ReactionModel {
         // query('SELECT TRC.IDTipoReaccion, TRC.Nombre, CRC.Cant FROM CantReacciones CRC INNER JOIN TipoReacciones TRC ON TRC.IDTipoReaccion = CRC.IDTipoReaccion WHERE CRC.IDPublicacion = ? ORDER BY CRC.Cant DESC;', 20);
         //     pub.Reacciones = reacciones[0];
         // })
-        // console.log('xd');
+        console.log(id);
         return pubs;
     }
 
