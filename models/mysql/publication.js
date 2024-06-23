@@ -1,8 +1,9 @@
 import mysql from 'mysql2/promise.js';
-import config from '../../config.json' with { type:'json' };
+import { dbConfig } from '../../utils/ProviderConfig.js';
+// import config from '../../config.json' with { type:'json' };
 
+const connection = await mysql.createConnection(dbConfig);
 
-const connection = await mysql.createConnection(config.development.db);
 
 export class PublicationModel {
 
