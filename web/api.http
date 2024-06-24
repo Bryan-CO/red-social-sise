@@ -9,24 +9,24 @@ POST http://localhost:1234/users
 Content-Type: application/json
 
 {
-    "alias": "lcabelloo",
+    "alias": "ola123",
     "nombre": "Luis Bryan",
     "apellido": "Cabello Ortiz",
-    "email": "lcasd@gmail.com",
-    "contraseña": "12345",
+    "email": "dfsdf@gmail.com",
+    "contraseña": "sdfsdf",
     "rutaAvatar": "http://avatars/arroz.jpg"
 }
 
 ### Actualizar un usuario
-PATCH http://localhost:1234/users/ee2e39bc-2e94-11ef-95a9-50ebf6283cbf
+PATCH http://localhost:1234/users/d98aa2ac-2f6c-11ef-86cf-50ebf6283cbf
 Content-Type: application/json
 
 {
-    "email": "lbco123@gmail.com"
+    "email": "ola12345@gmail.com"
 }
 
 ### Borrar usuario de forma lógica
-DELETE http://localhost:1234/users/ee2e39bc-2e94-11ef-95a9-50ebf6283cbf
+DELETE http://localhost:1234/users/d98aa2ac-2f6c-11ef-86cf-50ebf6283cbf
 
 
 
@@ -37,28 +37,28 @@ DELETE http://localhost:1234/users/ee2e39bc-2e94-11ef-95a9-50ebf6283cbf
 GET http://localhost:1234/publications
 
 ### Obtener publicación por ID
-GET http://localhost:1234/publications/13
+GET http://localhost:1234/publications/14
 
 ### Crear una publicación
 POST http://localhost:1234/publications
 Content-Type: application/json
 
 {
-    "uuid_usuario": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
-    "contenido": "OLAAAAAA"
+    "uuid_usuario": "169d772e-2ecb-11ef-95a9-50ebf6283cbf",
+    "contenido": "Hola estoy exponiendo xd"
 }
 
 ### Actualizar una publicación
-PATCH http://localhost:1234/publications/13
+PATCH http://localhost:1234/publications/14
 Content-Type: application/json
 
 {
-    "contenido": "Saluden uu"
+    "contenido": "Hola :("
 }
 
 
 ### Borrar una publicación
-DELETE http://localhost:1234/publications/13
+DELETE http://localhost:1234/publications/14
 
 
 
@@ -85,7 +85,7 @@ PATCH http://localhost:1234/publications/1/comments/11
 Content-Type: application/json
 
 {
-    "contenido": "que mal :("
+    "contenido": "Holaaaaaa"
 }
 
 ### Borrar un comentario
@@ -99,13 +99,13 @@ DELETE http://localhost:1234/publications/1/comments/11
 GET http://localhost:1234/publications/1/reactions
 
 ### Obtener reaccion por publicacion y tipo
-GET http://localhost:1234/publications/1/reactions/1
+GET http://localhost:1234/publications/12/reactions/1
 
 ### Añadir una nueva reaccion
 POST http://localhost:1234/publications/1/reactions
 Content-Type: application/json
 
 {
-    "user_uuid": "b126ee51-2e39-11ef-8238-50ebf6283cbf",
+    "user_uuid": "b126eb5b-2e39-11ef-8238-50ebf6283cbf",
     "reaction_id": 5
 }
