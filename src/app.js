@@ -4,6 +4,7 @@ import { status404 } from './middlewares/status404.js';
 import { corsMiddleware } from './middlewares/cors.js';
 import { publicacionRouter } from './routes/publication.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { commentRouter } from './routes/comment.js';
 // import { createRequire } from 'node:module';
 
 // const require = createRequire(import.meta.url);
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(corsMiddleware());
 app.use('/users', userRouter);
 app.use('/publications', publicacionRouter);
+app.use('/comments', commentRouter);
 app.use(status404());
 app.use(errorHandler);
 

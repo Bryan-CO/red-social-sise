@@ -81,7 +81,7 @@ Content-Type: application/json
 }
 
 ### Actualizar un comentario
-PATCH http://localhost:1234/publications/1/comments/11
+PATCH http://localhost:1234/comments/3
 Content-Type: application/json
 
 {
@@ -89,7 +89,7 @@ Content-Type: application/json
 }
 
 ### Borrar un comentario
-DELETE http://localhost:1234/publications/1/comments/11
+DELETE http://localhost:1234/comments/11
 
 
 #############################################################
@@ -99,7 +99,7 @@ DELETE http://localhost:1234/publications/1/comments/11
 GET http://localhost:1234/publications/1/reactions
 
 ### Obtener reaccion por publicacion y tipo
-GET http://localhost:1234/publications/12/reactions/1
+GET http://localhost:1234/publications/1/reactions/5
 
 ### Añadir una nueva reaccion
 POST http://localhost:1234/publications/1/reactions
