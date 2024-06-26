@@ -545,8 +545,8 @@ DELIMITER //
 CREATE PROCEDURE SP_COM_SEL1_PubComentarios
 ( IN pId INT )
 BEGIN
-    SELECT COM.IdComentario, COM.Contenido, COM.DtCreado,
-           BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.CantRespuestas, USU.RutaAvatar
+    SELECT COM.IdComentario, COM.Contenido, COM.DtCreado,  COM.CantRespuestas, COM.IdRespuesta,
+           BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar
     FROM PublicacionComentarios COM
     INNER JOIN Usuarios USU 
     ON USU.IdUsuario = COM.IdUsuario
@@ -563,8 +563,8 @@ DELIMITER //
 CREATE PROCEDURE SP_COM_SEL1_ByID
 ( IN pId INT )
 BEGIN
-    SELECT COM.IdComentario, COM.Contenido, COM.DtCreado,
-           BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.CantRespuestas, USU.RutaAvatar
+    SELECT COM.IdComentario, COM.Contenido, COM.DtCreado, COM.CantRespuestas, COM.IdRespuesta,
+           BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar
     FROM PublicacionComentarios COM
     INNER JOIN Usuarios USU 
     ON USU.IdUsuario = COM.IdUsuario
@@ -574,14 +574,14 @@ DELIMITER;
 
 
 /*  #COM.SEL2 - Mostrar Respuestas Por ID
-    -- CALL SP_COM_SEL2_ComRespuestas (2);
+    -- CALL SP_COM_SEL2_ComRespuestas (1);
 */
 DELIMITER //
 CREATE PROCEDURE SP_COM_SEL2_ComRespuestas
 ( IN pIdCom INT )
 BEGIN
-    SELECT COM.IdComentario, COM.Contenido, COM.DtCreado,
-           BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.CantRespuestas, USU.RutaAvatar
+    SELECT COM.IdComentario, COM.Contenido, COM.DtCreado, COM.CantRespuestas, COM.IdRespuesta,
+           BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar
     FROM PublicacionComentarios COM
     INNER JOIN Usuarios USU 
     ON USU.IdUsuario = COM.IdUsuario
