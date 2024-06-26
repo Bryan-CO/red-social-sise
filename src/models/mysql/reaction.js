@@ -9,10 +9,14 @@ export class ReactionModel {
 
     // GET ALL
     static async getAllById({id}){
+
         const [pubs] = await connection.query(
-            'SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Alias, USU.rutaAvatar, PBRC.IdTipoReaccion, RCT.Nombre from publicacionreacciones PBRC INNER JOIN usuarios USU ON USU.IdUsuario = PBRC.IdUsuario INNER JOIN tiporeacciones RCT ON RCT.IdTipoReaccion = PBRC.IdTipoReaccion WHERE PBRC.IdPublicacion = ?;', [id]
-        )
+            'CALL SP_PBR_SEL0_ReaccionPublicacion (?);', [id]
+        );
         
+        // const [pubs] = await connection.query(
+        //     'SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Alias, USU.rutaAvatar, PBRC.IdTipoReaccion, RCT.Nombre from publicacionreacciones PBRC INNER JOIN usuarios USU ON USU.IdUsuario = PBRC.IdUsuario INNER JOIN tiporeacciones RCT ON RCT.IdTipoReaccion = PBRC.IdTipoReaccion WHERE PBRC.IdPublicacion = ?;', [id]
+        // )
 
         // pubs.forEach(async pub => {
         //     const [reacciones] = await connection.
@@ -26,7 +30,8 @@ export class ReactionModel {
     // GET BY ID
     static async getById({ id, idReaction }){
         const [reactions] = await connection.query(
-            'CALL SP_PBR_SEL1_ReaccionUsuario (?, ?);', [id, idReaction]
+            'CALL SP_PBR_SEL1_ReaccionUsuario (?, ?);', 
+            [id, idReaction]
         )
         return reactions[0];
     }
@@ -39,7 +44,8 @@ export class ReactionModel {
         } = input;
 
         await connection.query(
-            `CALL SP_PBR_INS1_Agregar (?, UUID_TO_BIN(?), ?);`, [id, user_uuid, reaction_id]
+            `CALL SP_PBR_INS1_Agregar (?, UUID_TO_BIN(?), ?);`, 
+            [id, user_uuid, reaction_id]
         );
         
         return {message: "Se añadió una reacción!"};
@@ -48,27 +54,30 @@ export class ReactionModel {
     // UPDATE
     static async update({ id, input }){
         const{
-            contenido
+            user_uuid,
+            reaction_id
         } = input;
 
         const [result] = await connection.query(
-            'CALL SP_PUB_UPD_Actualizar (?, ?);',
-            [id, contenido]
+            `CALL SP_PBR_UPD1_Actualizar (?, UUID_TO_BIN(?), ?);`, 
+            [id, user_uuid, reaction_id]
         );
 
         if (result.affectedRows === 0) return false;
 
-        const[pub] = await connection.query(
-            'SELECT * FROM VW_PUB_SEL1_Lista WHERE IdPublicacion = ?', [id]
-        );
-        return pub;
-
+        return {message: "Se modifico la reacción!"};
     }
 
     // DELETE
-    static async delete({ id }){
+    static async delete({ id, input }){
+        const{
+            user_uuid,
+            reaction_id
+        } = input;
+        
         const [result] = await connection.query(
-            'CALL SP_PUB_DEL1_INHABILITAR (?)', [id]
+            'CALL SP_PBR_DEL1_Eliminar (?, UUID_TO_BIN(?), ?);',
+            [id, user_uuid, reaction_id]
         );
 
         return (result.affectedRows === 1);
