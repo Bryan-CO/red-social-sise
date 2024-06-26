@@ -9,10 +9,26 @@ export class CommentModel {
     
     // GET ALL COMMENTS
     static async getAll({ id }){
-        const [pubs] = await connection.query(
+        const [comm] = await connection.query(
             'CALL SP_COM_SEL1_PubComentarios(?);', [id]
         )
-        return pubs[0];
+        return comm[0];
+    }
+
+    // GET BY ID
+    static async getById({ id }){
+        const [comm] = await connection.query(
+            'CALL SP_COM_SEL1_ByID (?);', [id]
+        )
+        return comm[0];
+    }
+
+    // GET ANSWERS BY ID FATHER COMMET
+    static async getAnswerByIdFather({ id }) {
+        const [comm] = await connection.query(
+            'CALL SP_COM_SEL2_ComRespuestas (?);', [id]
+        )
+        return comm[0];
     }
 
     // CREATE COMMENT
@@ -26,6 +42,28 @@ export class CommentModel {
 
         await connection.query(
             `CALL SP_COM_INS1_Registrar (?, UUID_TO_BIN(?), ?);`, [id, uuid_usuario, contenido]
+        );
+
+        const [newComment] = await connection.query(
+            'CALL SP_COM_SEL1_ByID(LAST_INSERT_ID());'
+        );
+        
+        return newComment;
+    }
+
+    // CREATE ANSWER
+    static async createAnswer({ id, input }){
+        const{
+            uuid_usuario,
+            idComment,
+            contenido
+        } = input;
+
+        console.log(uuid_usuario);
+
+        await connection.query(
+            `CALL SP_COM_INS2_RegistrarRespuesta (?, ?, UUID_TO_BIN(?), ?);`, 
+            [id, idComment, uuid_usuario, contenido]
         );
 
         const [newComment] = await connection.query(
