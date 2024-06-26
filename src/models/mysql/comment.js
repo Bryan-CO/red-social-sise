@@ -24,7 +24,7 @@ export class CommentModel {
     }
 
     // GET ANSWERS BY ID FATHER COMMET
-    static async getAnswerByIdFather({ id }) {
+    static async getAnswerById({ id }) {
         const [comm] = await connection.query(
             'CALL SP_COM_SEL2_ComRespuestas (?);', [id]
         )

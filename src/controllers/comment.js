@@ -16,6 +16,30 @@ export class CommentController {
         }
     }
 
+    // GET COMMENTS BY ID
+    static async getById(req, res, next) {
+        const { id } = req.params;
+
+        try {
+            const comments = await CommentModel.getById({ id });
+            res.status(200).json(ResponseModel.success(comments, 'Comentario obtenidos correctamente'));
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    // GET ALL ANSWERS BY COMMENT ID
+    static async getAnswerById(req, res, next) {
+        const { id } = req.params;
+
+        try {
+            const comments = await CommentModel.getAnswerById({ id });
+            res.status(200).json(ResponseModel.success(comments, 'Respuestas obtenidas correctamente'));
+        } catch (error) {
+            next(error)
+        }
+    }
+
     // CREATE NEW COMMENT FOR A PUBLICATION
     static async create(req, res, next) {
         const { id } = req.params;
@@ -32,6 +56,24 @@ export class CommentController {
             next(error);
         }
     }
+
+    // CREATE NEW ANSWER FOR A COMMENT
+    static async createAnswer(req, res, next) {
+        const { id } = req.params;
+        const result = validateComment(req.body);
+
+        if (result.error) {
+            return res.status(400).json(ResponseModel.error('Validación fallida', 400, JSON.parse(result.error.message)));
+        }
+
+        try {
+            const newAnswer = await CommentModel.createAnswer({ id, input: result.data });
+            res.status(201).json(ResponseModel.success(newAnswer, 'Respuesta creada correctamente', 201));
+        } catch (error) {
+            next(error);
+        }
+    }
+
 
     // UPDATE COMMENT
     static async update(req, res, next) {
