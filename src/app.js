@@ -1,25 +1,36 @@
 import express from 'express';
+import cookieParser from 'cookie-parser'
+import { AuthRouter } from './routes/authentication.js';
 import { userRouter } from './routes/user.js';
-import { status404 } from './middlewares/status404.js';
-import { corsMiddleware } from './middlewares/cors.js';
 import { publicacionRouter } from './routes/publication.js';
-import { errorHandler } from './middlewares/errorHandler.js';
 import { commentRouter } from './routes/comment.js';
-// import { createRequire } from 'node:module';
+import { corsMiddleware } from './middlewares/cors.js';
+import { status404 } from './middlewares/status404.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
-// const require = createRequire(import.meta.url);
-// const config = require('./config.json');
 
 const app = express();
-const PORT = process.env.SERVER_PORT ?? 3000;
 
-app.use(express.json());
+// * Middlewares
+app.use(cookieParser())
 app.use(corsMiddleware());
+
+// * Content Type Config
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// * Routes
+app.use('/auth', AuthRouter);
 app.use('/users', userRouter);
 app.use('/publications', publicacionRouter);
 app.use('/comments', commentRouter);
+
+// * Status 404
 app.use(status404());
+
+// * Error Handler
 app.use(errorHandler);
 
-
+// * Server Listen Config
+const PORT = process.env.SERVER_PORT ?? 4000;
 app.listen(PORT, () => console.log(`App escuchando en http://localhost:${PORT}`));
