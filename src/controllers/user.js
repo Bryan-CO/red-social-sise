@@ -33,6 +33,11 @@ export class UserController {
             if (result.error) {
                 return res.status(400).json(ResponseModel.error('Usuario no fue validado correctamente', 400, JSON.parse(result.error.message)));
             }
+
+            const passFlat = result.data.contraseña;
+            const hashedPass = await AuthUtil.hashPassword(passFlat);
+            result.data.contraseña = hashedPass;
+
             const newUser = await UserModel.create({ input: result.data });
             res.status(201).json(ResponseModel.success(newUser, 'Usuario creado correctamente!', 201));
 
