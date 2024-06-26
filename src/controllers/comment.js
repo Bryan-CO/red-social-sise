@@ -59,7 +59,7 @@ export class CommentController {
 
     // CREATE NEW ANSWER FOR A COMMENT
     static async createAnswer(req, res, next) {
-        const { id } = req.params;
+        const { id, comment } = req.params;
         const result = validateComment(req.body);
 
         if (result.error) {
@@ -67,7 +67,7 @@ export class CommentController {
         }
 
         try {
-            const newAnswer = await CommentModel.createAnswer({ id, input: result.data });
+            const newAnswer = await CommentModel.createAnswer({ id, comment, input: result.data });
             res.status(201).json(ResponseModel.success(newAnswer, 'Respuesta creada correctamente', 201));
         } catch (error) {
             next(error);

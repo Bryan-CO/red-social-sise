@@ -23,6 +23,8 @@ publicacionRouter.get('/:id/comments', CommentController.getAll);
 
 publicacionRouter.post('/:id/comments', CommentController.create);
 
+publicacionRouter.post('/:id/:comment/answer', CommentController.createAnswer);
+
 // REACCIONES
 
 publicacionRouter.post('/:id/reactions', ReactionController.create)

@@ -52,10 +52,9 @@ export class CommentModel {
     }
 
     // CREATE ANSWER
-    static async createAnswer({ id, input }){
+    static async createAnswer({ id, comment, input }){
         const{
             uuid_usuario,
-            idComment,
             contenido
         } = input;
 
@@ -63,7 +62,7 @@ export class CommentModel {
 
         await connection.query(
             `CALL SP_COM_INS2_RegistrarRespuesta (?, ?, UUID_TO_BIN(?), ?);`, 
-            [id, idComment, uuid_usuario, contenido]
+            [id, comment, uuid_usuario, contenido]
         );
 
         const [newComment] = await connection.query(
