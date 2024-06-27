@@ -1,5 +1,6 @@
 import { UserModel } from '../models/mysql/user.js';
 import { validatePartialUser, validateUser } from '../schemas/user.js';
+import { AuthUtil } from '../utils/AuthUtil.js';
 import { ResponseModel } from '../utils/Response.js';
 
 export class UserController {

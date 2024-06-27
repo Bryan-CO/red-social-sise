@@ -44,6 +44,7 @@ export class UserModel {
     static async create({ input }){
         const{
             username,
+            role,
             nombre,
             apellidopaterno,
             apellidomaterno,
@@ -59,8 +60,8 @@ export class UserModel {
         const [{uuid}] = uuidResult;
 
         await connection.query(
-            `CALL SP_USU_INS1_Registrar (UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?);`,
-            [uuid, username, nombre, apellidopaterno, apellidomaterno, email, contraseña, rutaAvatar]
+            `CALL SP_USU_INS1_Registrar (UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?, ?);`,
+            [uuid, role, username, nombre, apellidopaterno, apellidomaterno, email, contraseña, rutaAvatar]
         );
 
         const newUser = {

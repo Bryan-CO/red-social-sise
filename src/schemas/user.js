@@ -4,7 +4,8 @@ const userSchema = z.object({
     username: z.string({
         invalid_type_error: 'El username debe ser un string!',
         required_error: 'El username es requerido'
-    }), // Puedo incluso ver la informacion del error
+    }), 
+    role: z.number(),
     nombre: z.string(),
     apellidopaterno: z.string(),
     apellidomaterno: z.string(),
