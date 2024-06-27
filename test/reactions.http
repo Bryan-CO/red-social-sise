@@ -1,0 +1,14 @@
+### GET ALL (NO TOKEN OR ROLE REQUIRED)
+GET http://localhost:1234/publications/1/reactions
+
+### GET BY ID (TOKEN AND ROLE REQUIRED)
+GET http://localhost:1234/publications/1/reactions/5
+
+### CREATE (TOKEN OR ROLE REQUIRED)
+POST http://localhost:1234/publications/1/reactions
+Content-Type: application/json
+
+{
+    "user_uuid": "b126eb5b-2e39-11ef-8238-50ebf6283cbf",
+    "reaction_id": 5
+}

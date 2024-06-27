@@ -1,0 +1,23 @@
+### GET ALL BY POST (NO TOKEN OR ROLE REQUIRED)
+GET http://localhost:1234/publications/2/comments
+
+
+### CREATE (TOKEN AND ROLE REQUIRED)
+POST http://localhost:1234/publications/2/comments
+Content-Type: application/json
+
+{
+    "uuid_usuario": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
+    "contenido": "Que bien uwu"
+}
+
+### UPDATE (TOKEN AND ROLE REQUIRED)
+PATCH http://localhost:1234/comments/3
+Content-Type: application/json
+
+{
+    "contenido": "Holaaaaaa"
+}
+
+### DELETE (TOKEN AND ROLE REQUIRED)
+DELETE http://localhost:1234/comments/11

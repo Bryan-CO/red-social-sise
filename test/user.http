@@ -1,0 +1,48 @@
+### GET ALL (NO TOKEN OR ROLE REQUIRED)
+GET http://localhost:1234/users
+
+### GET BY ID (TOKEN AND ROLE REQUIRED)
+GET http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf
+
+### CREATE / USER (TOKEN REQUIRED, NO ROLE REQUIRED)
+POST http://localhost:1234/users
+Content-Type: application/json
+
+{
+    "username": "23Lamse",
+    "nombre": "Yorich Sorem",
+    "apellidopaterno": "Lamse",
+    "apellidomaterno": "Kalth",
+    "email": "yoLamse@gmail.com",
+    "contraseña": "12345",
+    "rutaAvatar": "http://avatars/yoLamse.jpg"
+}
+
+
+### CREATE / ADMIN (TOKEN REQUIRED, NO ROLE REQUIRED)
+POST http://localhost:1234/users
+Content-Type: application/json
+
+{
+    "username": "24Jhon",
+    "role": 2,
+    "nombre": "Jonh Yalak",
+    "apellidopaterno": "Lamse",
+    "apellidomaterno": "Rito",
+    "email": "yoJohn@gmail.com",
+    "contraseña": "1234ABCD",
+    "rutaAvatar": "http://avatars/yoRITO.jpg"
+}
+
+
+### UPDATE (TOKEN REQUIRED, NO ROLE REQUIRED)
+PATCH http://localhost:1234/users/d98aa2ac-2f6c-11ef-86cf-50ebf6283cbf
+Content-Type: application/json
+
+{
+    "email": "youLamse@gmail.com"
+}
+
+
+### DELETE (TOKEN REQUIRED, NO ROLE REQUIRED)
+DELETE http://localhost:1234/users/d98aa2ac-2f6c-11ef-86cf-50ebf6283cbf

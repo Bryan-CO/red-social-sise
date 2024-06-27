@@ -1,0 +1,26 @@
+### GET ALL (NO TOKEN OR ROLE REQUIRED)
+GET http://localhost:1234/publications
+
+### GET BY ID (TOKEN AND ROLE REQUIRED)
+GET http://localhost:1234/publications/14
+
+### CREATE (TOKEN AND ROLE REQUIRED)
+POST http://localhost:1234/publications
+Content-Type: application/json
+
+{
+    "uuid_usuario": "169d772e-2ecb-11ef-95a9-50ebf6283cbf",
+    "contenido": "Hola estoy exponiendo xd"
+}
+
+### UPDATE (TOKEN AND ROLE UPDATE)
+PATCH http://localhost:1234/publications/14
+Content-Type: application/json
+
+{
+    "contenido": "Hola :("
+}
+
+### DELETE (TOKEN AND ROLE UPDATE)
+DELETE http://localhost:1234/publications/14
+

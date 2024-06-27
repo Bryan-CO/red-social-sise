@@ -1,0 +1,59 @@
+### GENERATE TOKEN (ONLY TO TEST TOKEN SIGNING)
+POST http://localhost:1234/auth/generate
+Content-Type: application/json
+
+{
+    "id": "1234",
+    "username": "ASDFGHJKL123"
+}
+
+### REGISTER (NO TOKEN OR ROLE REQUIRED)
+POST http://localhost:1234/auth/register
+Content-Type: application/json
+
+{
+    "username": "23Lamse",
+    "role": 1,
+    "nombre": "Yorich Sorem",
+    "apellidopaterno": "Lamse",
+    "apellidomaterno": "Kalth",
+    "email": "yoLamse@gmail.com",
+    "contraseña": "12345",
+    "rutaAvatar": "http://avatars/yoLamse.jpg"
+}
+
+### CREATE / ADMIN (TOKEN REQUIRED, NO ROLE REQUIRED)
+POST http://localhost:1234/users
+Content-Type: application/json
+
+{
+    "username": "24Jhon",
+    "role": 2,
+    "nombre": "Jonh Yalak",
+    "apellidopaterno": "Lamse",
+    "apellidomaterno": "Rito",
+    "email": "yoJohn@gmail.com",
+    "contraseña": "1234ABCD",
+    "rutaAvatar": "http://avatars/yoRITO.jpg"
+}
+
+### LOGIN / USER (NO TOKEN OR ROLE REQUIRED)
+POST http://localhost:1234/auth/login
+Content-Type: application/json
+
+{
+    "username": "23Lamse",
+    "contraseña": "12345"
+}
+
+### LOGIN / ADMIN (NO TOKEN OR ROLE REQUIRED)
+POST http://localhost:1234/auth/login
+Content-Type: application/json
+
+{
+    "username": "24Jhon",
+    "contraseña": "1234ABCD"
+}
+
+### LOGOUT (TOKEN REQUIRED, NO ROLE REQUIRED)
+POST http://localhost:1234/auth/logout
