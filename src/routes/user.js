@@ -1,15 +1,17 @@
 import { randomUUID } from 'node:crypto';
 import { Router } from 'express';
 import { UserController } from '../controllers/user.js';
+import { authRequired } from '../middlewares/validateToken.js';
+import { permsRequired } from '../middlewares/validatePerms.js';
 
 export const userRouter = Router();
 
-userRouter.get('/', UserController.getAll);
+userRouter.get('/', authRequired, UserController.getAll);
 
-userRouter.get('/:id', UserController.getById);
+userRouter.get('/:id', authRequired, UserController.getById);
 
-userRouter.post('/', UserController.create);
+userRouter.post('/', authRequired, UserController.create);
 
-userRouter.patch('/:id', UserController.update);
+userRouter.patch('/:id', authRequired, UserController.update);
 
-userRouter.delete('/:id', UserController.delete);
+userRouter.delete('/:id', authRequired, permsRequired, UserController.delete);
