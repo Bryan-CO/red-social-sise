@@ -433,10 +433,10 @@ AS
 
 DELIMITER //
 CREATE PROCEDURE SP_USU_INS1_Registrar 
-( IN pIdUsuario BINARY(16), IN pUsername varchar(50), IN pNombre varchar(50), IN pApPaterno varchar(50), IN pApMaterno varchar(50), IN pEmail varchar(80), IN pPass varchar(60), IN pAvatar varchar(255) )
+( IN pIdUsuario BINARY(16), IN pRol INT, IN pUsername varchar(50), IN pNombre varchar(50), IN pApPaterno varchar(50), IN pApMaterno varchar(50), IN pEmail varchar(80), IN pPass varchar(60), IN pAvatar varchar(255) )
 BEGIN
-    INSERT INTO Usuarios (IdUsuario, Username, Nombre, ApellidoPaterno, ApellidoMaterno, Email, Contrasena, RutaAvatar) 
-    VALUES (pIdUsuario, pUsername, pNombre, pApPaterno, pApMaterno, pEmail, pPass, pAvatar);
+    INSERT INTO Usuarios (IdUsuario, IdRol, Username, Nombre, ApellidoPaterno, ApellidoMaterno, Email, Contrasena, RutaAvatar) 
+    VALUES (pIdUsuario, pRol, pUsername, pNombre, pApPaterno, pApMaterno, pEmail, pPass, pAvatar);
 END //
 DELIMITER; 
 
