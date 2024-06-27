@@ -85,7 +85,7 @@ export class UserModel {
         } = input;
 
         const [result] = await connection.query(
-            'CALL SP_USU_UPD2_ActDetalle (UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?)',
+            'CALL SP_USU_UPD2_ActDetalle (UUID_TO_BIN(?), ?, ?, ?, ?, ?, ?, ?)',
             [id, username, nombre, apellidopaterno, apellidomaterno, email, contraseña, rutaAvatar]
         );
 

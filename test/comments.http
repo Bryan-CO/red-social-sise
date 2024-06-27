@@ -1,6 +1,12 @@
 ### GET ALL BY POST (NO TOKEN OR ROLE REQUIRED)
 GET http://localhost:1234/publications/2/comments
 
+### GET BY ID 
+GET http://localhost:1234/comments/11
+
+### GET ANSWERS BY ID 
+GET http://localhost:1234/comments/11/answers
+
 
 ### CREATE (TOKEN AND ROLE REQUIRED)
 POST http://localhost:1234/publications/2/comments
@@ -11,8 +17,18 @@ Content-Type: application/json
     "contenido": "Que bien uwu"
 }
 
+### CREATE ANSWER 
+POST http://localhost:1234/publications/2/answer/11
+Content-Type: application/json
+
+{
+    "uuid_usuario": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
+    "contenido": "Hola uwu"
+}
+
+
 ### UPDATE (TOKEN AND ROLE REQUIRED)
-PATCH http://localhost:1234/comments/3
+PATCH http://localhost:1234/comments/11
 Content-Type: application/json
 
 {

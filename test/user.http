@@ -10,6 +10,7 @@ Content-Type: application/json
 
 {
     "username": "23Lamse",
+    "role": 1,
     "nombre": "Yorich Sorem",
     "apellidopaterno": "Lamse",
     "apellidomaterno": "Kalth",
@@ -36,7 +37,7 @@ Content-Type: application/json
 
 
 ### UPDATE (TOKEN REQUIRED, NO ROLE REQUIRED)
-PATCH http://localhost:1234/users/d98aa2ac-2f6c-11ef-86cf-50ebf6283cbf
+PATCH http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf
 Content-Type: application/json
 
 {
@@ -45,4 +46,4 @@ Content-Type: application/json
 
 
 ### DELETE (TOKEN REQUIRED, NO ROLE REQUIRED)
-DELETE http://localhost:1234/users/d98aa2ac-2f6c-11ef-86cf-50ebf6283cbf
+DELETE http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf

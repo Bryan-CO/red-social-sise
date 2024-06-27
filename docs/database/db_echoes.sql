@@ -728,7 +728,7 @@ DELIMITER //
 CREATE PROCEDURE SP_PBR_SEL0_ReaccionPublicacion
 ( IN pPost INT )
 BEGIN
-    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Alias, USU.rutaAvatar, PBRC.IdTipoReaccion, RCT.Nombre 
+    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.rutaAvatar, PBRC.IdTipoReaccion, RCT.Nombre 
     FROM publicacionreacciones PBRC 
     INNER JOIN usuarios USU ON USU.IdUsuario = PBRC.IdUsuario 
     INNER JOIN tiporeacciones RCT ON RCT.IdTipoReaccion = PBRC.IdTipoReaccion 

@@ -25,7 +25,7 @@ publicacionRouter.get('/:id/comments', authRequired, CommentController.getAll);
 
 publicacionRouter.post('/:id/comments', authRequired, CommentController.create);
 
-publicacionRouter.post('/:id/:comment/answer', authRequired, CommentController.createAnswer);
+publicacionRouter.post('/:id/answer/:comment', authRequired, CommentController.createAnswer);
 
 // REACCIONES
 
