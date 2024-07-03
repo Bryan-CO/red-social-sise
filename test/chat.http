@@ -1,0 +1,24 @@
+### GET ALL CHATS (TOKEN REQUIRED)
+GET http://localhost:1234/chats
+
+### GET BY ID (TOKEN REQUIRED)
+GET http://localhost:1234/chats/6
+
+### CREATE (TOKEN REQUIRED)
+POST http://localhost:1234/chats
+Content-Type: application/json
+
+{
+    "nombre": "Yorich"
+}
+
+### UPDATE (TOKEN REQUIRED)
+PATCH http://localhost:1234/chats/6
+Content-Type: application/json
+
+{
+    "nombre": "Yorich 1"
+}
+
+### DELETE (TOKEN REQUIRED)
+DELETE http://localhost:1234/chats/6

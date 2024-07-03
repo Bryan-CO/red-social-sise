@@ -4,6 +4,9 @@ GET http://localhost:1234/users
 ### GET BY ID (TOKEN AND ROLE REQUIRED)
 GET http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf
 
+### GET ALL CHATS BY USER
+GET http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf/chats
+
 ### CREATE / USER (TOKEN REQUIRED, NO ROLE REQUIRED)
 POST http://localhost:1234/users
 Content-Type: application/json
