@@ -229,6 +229,7 @@ END //
 DELIMITER;
 
 
+/*
 -- TRIGGERS : ChatsMiembros / INSERT
 DELIMITER //
 CREATE TRIGGER InsertChatMiembros
@@ -245,6 +246,7 @@ BEGIN
     END IF;
 END //
 DELIMITER;
+*/
 
 -- Datos iniciales para Roles
 INSERT INTO Roles(Nombre) VALUES
