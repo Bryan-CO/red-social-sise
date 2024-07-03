@@ -792,6 +792,162 @@ BEGIN
 END //
 DELIMITER;
 
+/*  ----------------------------------------------------------    
+    CHT - Chats     
+    ----------------------------------------------------------
+*/
+
+/*  #USU.SEL1 - Chats activos
+    -- SELECT * FROM VW_CHT_SEL1_Actived;
+*/ 
+CREATE VIEW VW_CHT_SEL1_Actived
+AS
+    SELECT CHT.IdChat, CHT.Nombre, CHT.DtCreado
+    FROM Chats CHT
+    WHERE CHT.RgStatus = 1;
+
+
+/*  #CHT.INS1 - Registrar Chat
+    -- CALL SP_CHT_INS1_Registrar ('tester');
+*/
+DELIMITER //
+CREATE PROCEDURE SP_CHT_INS1_Registrar
+( IN pName VARCHAR(20) )
+BEGIN
+    INSERT INTO Chats (IDChat) 
+    VALUES (pName);
+END //
+DELIMITER;
+
+
+/*  #CHT.UPD2 - Actualizar Nombre Chat
+    -- CALL SP_CHT_UPD2_ActNombre (1, 'Home');
+*/
+DELIMITER //
+CREATE PROCEDURE SP_CHT_UPD2_ActNombre
+( IN pId INT, IN pName VARCHAR(20) )
+BEGIN
+    UPDATE Chats SET Nombre = IFNULL(pName, Nombre)
+    WHERE IDChat = pId;
+END //
+DELIMITER;
+
+
+DELIMITER //
+CREATE PROCEDURE SP_CHT_DEL1_Inhabilitar
+( IN pId INT )
+BEGIN
+    UPDATE Chats SET RgStatus = 0
+    WHERE IDChat = pId;
+END //
+DELIMITER;
+
+
+
+/*  ----------------------------------------------------------    
+    CHM - ChatsMiembros     
+    ----------------------------------------------------------
+*/
+
+/*  #CHM.SEL1 - Mostrar Miembros Chat
+    -- CALL SP_CHM_SEL1_Miembros (1);
+*/
+DELIMITER //
+CREATE PROCEDURE SP_CHM_SEL1_Miembros
+( IN pChat INT )
+BEGIN
+    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar, USU.DtCreado AS 'MemberSince'
+    FROM ChatsMiembros CHM 
+    INNER JOIN Usuarios USU 
+    ON USU.IDUsuario = CHM.IDUsuario
+    WHERE CHM.RgStatus = 1 AND CHM.IDChat = pChat
+    ORDER BY USU.Username ASC, USU.DtCreado DESC;
+END //
+DELIMITER;
+
+
+/*  #CHM.INS1 - Agregar Miembro
+    -- CALL SP_CHM_INS1_Agregar (1, 3);
+*/
+DELIMITER //
+CREATE PROCEDURE SP_CHM_INS1_Agregar
+( IN pChat INT, IN pUser BINARY(16) )
+BEGIN
+    INSERT INTO ChatsMiembros (IDChat, IDUsuario)
+    VALUES (pChat, pUser);
+END //
+DELIMITER;
+
+
+/*  #CHM.DEL1 - Inhabilitar Miembro
+    -- CALL SP_CHM_DEL1_Inhabilitar (1, 2);
+*/
+DELIMITER //
+CREATE PROCEDURE SP_CHM_DEL1_Inhabilitar 
+( IN pChat INT, IN pUser BINARY(16) )
+BEGIN 
+    UPDATE ChatsMiembros SET RgStatus = 0 
+    WHERE IDChat = pChat AND IDUsuario = pUser;
+END //
+DELIMITER;
+
+
+/*  ----------------------------------------------------------    
+    MSG - Mensajes    
+    ----------------------------------------------------------
+*/
+
+/*  #USU.SEL1 - Mensajes activos
+    -- SELECT * FROM VW_MSG_SEL1_Actived;
+*/ 
+CREATE VIEW VW_MSG_SEL1_Actived
+AS
+    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar
+    MSG.IDMensaje, MSG.Contenido, MSG.DtCreado, MSG.DtAct
+    FROM Mensajes MSG
+    INNER JOIN Usuarios USU 
+    ON USU.IDUsuario = CHM.IDUsuario
+    WHERE MSG.RgStatus = 1;
+
+
+/*  #MSG.INS1 - Registrar Mensaje
+    -- CALL SP_MSG_INS1_Registrar (1, 2, 'Tester');
+*/
+DELIMITER //
+CREATE PROCEDURE SP_MSG_INS1_Registrar
+( IN pChat INT, IN pUser BINARY(16), IN pContent VARCHAR(255) )
+BEGIN
+    INSERT INTO Mensajes (IDChat, IDUsuarioRemitente, Contenido) 
+    VALUES (pChat, pUser, pContent);
+END //
+DELIMITER;
+
+
+/*  #MSG.UPD2 - Actualizar Mensaje
+    -- CALL SP_MSG_UPD2_Actualizar (27, 'Testeooo!! ✅');
+*/ 
+DELIMITER //
+CREATE PROCEDURE SP_MSG_UPD2_Actualizar
+( IN pId INT, IN pContent VARCHAR(255) )
+BEGIN
+    UPDATE Mensajes SET Contenido = pContent
+    WHERE IDMensaje = pId;
+END //
+DELIMITER;
+
+
+/*  #MSG.DEL1 - Inhabilitar Mensaje 
+    -- CALL SP_MSG_DEL1_Inhabilitar (27);
+*/
+DELIMITER //
+CREATE PROCEDURE SP_MSG_DEL1_Inhabilitar
+( IN pId INT )
+BEGIN 
+    UPDATE Mensajes SET RgStatus = 0 
+    WHERE IDMensaje = pId;
+END //
+DELIMITER;
+
 
 /*  ---------------------------------------------------
     ---------------------------------------------------
