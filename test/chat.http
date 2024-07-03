@@ -2,7 +2,21 @@
 GET http://localhost:1234/chats
 
 ### GET BY ID (TOKEN REQUIRED)
-GET http://localhost:1234/chats/6
+GET http://localhost:1234/chats/3
+
+### GET ALL MEMBERS (TOKEN REQUIRED)
+GET http://localhost:1234/chats/1/members
+
+### ADD MEMBERS (TOKEN REQUIRED)
+POST http://localhost:1234/chats/1/members
+Content-Type: application/json
+
+{
+    "miembro": "b126ee51-2e39-11ef-8238-50ebf6283cbf"
+}
+
+### KICK MEMBER TO CHAT (TOKEN REQUIRED)
+DELETE http://localhost:1234/chats/1/members/b126ee51-2e39-11ef-8238-50ebf6283cbf
 
 ### CREATE (TOKEN REQUIRED)
 POST http://localhost:1234/chats
