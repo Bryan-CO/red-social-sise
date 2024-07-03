@@ -802,10 +802,26 @@ DELIMITER;
 */ 
 CREATE VIEW VW_CHT_SEL1_Actived
 AS
-    SELECT CHT.IdChat, CHT.Nombre, CHT.DtCreado
+    SELECT CHT.IdChat ID, CHT.Nombre, CHT.DtCreado
     FROM Chats CHT
     WHERE CHT.RgStatus = 1;
 
+
+/*  #USU.SEL1 - Chats activos POR Usuario
+    -- CALL SP_CHT_SEL2_ChatsUsuario ();
+*/ 
+DELIMITER //
+CREATE PROCEDURE SP_CHT_SEL2_ChatsUsuario
+( IN pUser BINARY(16) )
+BEGIN
+    SELECT CHT.IDChat, CHT.Nombre, CHT.DtCreado
+    FROM Chats CHT
+    INNER JOIN ChatsMiembros CHM 
+    ON CHM.IDChat = CHT.IDChat
+    WHERE CHT.RgStatus = 1 AND CHM.IDUsuario = pUser
+    ORDER BY CHT.IDChat;
+END //
+DELIMITER;
 
 /*  #CHT.INS1 - Registrar Chat
     -- CALL SP_CHT_INS1_Registrar ('tester');
@@ -814,17 +830,17 @@ DELIMITER //
 CREATE PROCEDURE SP_CHT_INS1_Registrar
 ( IN pName VARCHAR(20) )
 BEGIN
-    INSERT INTO Chats (IDChat) 
+    INSERT INTO Chats (Nombre) 
     VALUES (pName);
 END //
 DELIMITER;
 
 
 /*  #CHT.UPD2 - Actualizar Nombre Chat
-    -- CALL SP_CHT_UPD2_ActNombre (1, 'Home');
+    -- CALL SP_CHT_UPD2_ActChat (6, 'Home');
 */
 DELIMITER //
-CREATE PROCEDURE SP_CHT_UPD2_ActNombre
+CREATE PROCEDURE SP_CHT_UPD2_ActChat
 ( IN pId INT, IN pName VARCHAR(20) )
 BEGIN
     UPDATE Chats SET Nombre = IFNULL(pName, Nombre)
@@ -833,6 +849,9 @@ END //
 DELIMITER;
 
 
+/*  #CHT.DEL1 - Inhbilitar Chat
+    -- CALL SP_CHT_DEL1_Inhabilitar (6);
+*/
 DELIMITER //
 CREATE PROCEDURE SP_CHT_DEL1_Inhabilitar
 ( IN pId INT )
@@ -902,11 +921,11 @@ DELIMITER;
 */ 
 CREATE VIEW VW_MSG_SEL1_Actived
 AS
-    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar
+    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar,
     MSG.IDMensaje, MSG.Contenido, MSG.DtCreado, MSG.DtAct
     FROM Mensajes MSG
     INNER JOIN Usuarios USU 
-    ON USU.IDUsuario = CHM.IDUsuario
+    ON USU.IDUsuario = MSG.IdUsuarioRemitente
     WHERE MSG.RgStatus = 1;
 
 
