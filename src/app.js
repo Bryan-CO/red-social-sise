@@ -7,6 +7,7 @@ import { commentRouter } from './routes/comment.js';
 import { corsMiddleware } from './middlewares/cors.js';
 import { status404 } from './middlewares/status404.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { chatRouter } from './routes/chat.js';
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/auth', AuthRouter);
 app.use('/users', userRouter);
 app.use('/publications', publicacionRouter);
 app.use('/comments', commentRouter);
+app.use('/chats', chatRouter);
 
 // * Status 404
 app.use(status404());
