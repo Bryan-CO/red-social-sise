@@ -1,0 +1,17 @@
+### GET ALL (TOKEN REQUIRED)
+GET http://localhost:1234/messages
+
+### GET BY ID (TOKEN REQUIRED)
+GET http://localhost:1234/messages/1
+
+### UPDATE (TOKEN REQUIRED)
+PATCH http://localhost:1234/messages/1
+Content-Type: application/json
+
+{
+    "contenido": "Tester 🔥|✅"
+}
+
+### DELETE (TOKEN REQUIRED)
+DELETE http://localhost:1234/messages/1
+

@@ -36,3 +36,16 @@ Content-Type: application/json
 
 ### DELETE (TOKEN REQUIRED)
 DELETE http://localhost:1234/chats/6
+
+### GET MESSAGES BY CHAT (TOKEN REQUIRED)
+GET http://localhost:1234/chats/1/messages
+
+
+### CREATE MESSAGE (TOKEN REQUIRED)
+POST http://localhost:1234/chats/1/messages
+Content-Type: application/json
+
+{
+    "uuid_usuario": "b126cb40-2e39-11ef-8238-50ebf6283cbf",
+    "contenido": "Que bien uwu"
+}
