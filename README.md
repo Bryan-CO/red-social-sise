@@ -7,7 +7,7 @@ Este proyecto es una plantilla básica para una aplicación Node.js utilizando E
 - MySQL
 
 ## Base de Datos
-Este proyecto utiliza MySQL como base de datos. Asegúrate de tener una instancia de MySQL corriendo y configura tus credenciales en el archivo `.env`.
+Este proyecto utiliza MySQL como base de datos. Asegúrate de tener una instancia de MySQL corriendo y configura tus credenciales en el archivo `.env`. Script de la base utilizada en [db_echoes.sql](./docs/database/db_echoes.sql).
 
 ## Instalación
 
