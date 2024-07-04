@@ -1,13 +1,13 @@
-### GET ALL (NO TOKEN OR ROLE REQUIRED)
+### GET ALL (TOKEN REQUIRED)
 GET http://localhost:1234/users
 
-### GET BY ID (TOKEN AND ROLE REQUIRED)
+### GET BY ID (TOKEN REQUIRED)
 GET http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf
 
-### GET ALL CHATS BY USER
+### GET ALL CHATS BY USER (TOKEN REQUIRED)
 GET http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf/chats
 
-### CREATE / USER (TOKEN REQUIRED, NO ROLE REQUIRED)
+### CREATE / USER (TOKEN REQUIRED)
 POST http://localhost:1234/users
 Content-Type: application/json
 
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 
-### CREATE / ADMIN (TOKEN REQUIRED, NO ROLE REQUIRED)
+### CREATE / ADMIN (TOKEN REQUIRED)
 POST http://localhost:1234/users
 Content-Type: application/json
 
@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 
-### UPDATE (TOKEN REQUIRED, NO ROLE REQUIRED)
+### UPDATE (TOKEN REQUIRED)
 PATCH http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf
 Content-Type: application/json
 
@@ -48,5 +48,5 @@ Content-Type: application/json
 }
 
 
-### DELETE (TOKEN REQUIRED, NO ROLE REQUIRED)
+### DELETE (TOKEN AND ROLE REQUIRED)
 DELETE http://localhost:1234/users/b126cb40-2e39-11ef-8238-50ebf6283cbf

@@ -1,14 +1,14 @@
-### GET ALL BY POST (NO TOKEN OR ROLE REQUIRED)
+### GET ALL BY POST (TOKEN REQUIRED)
 GET http://localhost:1234/publications/2/comments
 
-### GET BY ID 
+### GET BY ID (TOKEN REQUIRED)
 GET http://localhost:1234/comments/11
-
-### GET ANSWERS BY ID 
+ 
+### GET ANSWERS BY ID (TOKEN REQUIRED)
 GET http://localhost:1234/comments/11/answers
 
 
-### CREATE (TOKEN AND ROLE REQUIRED)
+### CREATE (TOKEN REQUIRED)
 POST http://localhost:1234/publications/2/comments
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
     "contenido": "Que bien uwu"
 }
 
-### UPDATE (TOKEN AND ROLE REQUIRED)
+### UPDATE (TOKEN REQUIRED)
 PATCH http://localhost:1234/comments/11
 Content-Type: application/json
 
@@ -25,5 +25,5 @@ Content-Type: application/json
     "contenido": "Holaaaaaa"
 }
 
-### DELETE (TOKEN AND ROLE REQUIRED)
+### DELETE (TOKEN REQUIRED)
 DELETE http://localhost:1234/comments/11

@@ -1,10 +1,10 @@
-### GET ALL (NO TOKEN OR ROLE REQUIRED)
+### GET ALL (TOKEN REQUIRED)
 GET http://localhost:1234/publications/1/reactions
 
-### GET BY ID (TOKEN AND ROLE REQUIRED)
+### GET BY ID (TOKEN REQUIRED)
 GET http://localhost:1234/publications/1/reactions/2
 
-### CREATE (TOKEN OR ROLE REQUIRED)
+### CREATE (TOKEN REQUIRED)
 POST http://localhost:1234/publications/1/reactions
 Content-Type: application/json
 

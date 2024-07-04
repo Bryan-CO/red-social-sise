@@ -7,7 +7,7 @@ Content-Type: application/json
     "username": "ASDFGHJKL123"
 }
 
-### REGISTER (NO TOKEN OR ROLE REQUIRED)
+### REGISTER / USER
 POST http://localhost:1234/auth/register
 Content-Type: application/json
 
@@ -22,8 +22,8 @@ Content-Type: application/json
     "rutaAvatar": "http://avatars/yoLamse.jpg"
 }
 
-### CREATE / ADMIN (TOKEN REQUIRED, NO ROLE REQUIRED)
-POST http://localhost:1234/users
+### CREATE / ADMIN
+POST http://localhost:1234/auth/register
 Content-Type: application/json
 
 {
@@ -37,7 +37,7 @@ Content-Type: application/json
     "rutaAvatar": "http://avatars/yoRITO.jpg"
 }
 
-### LOGIN / USER (NO TOKEN OR ROLE REQUIRED)
+### LOGIN / USER 
 POST http://localhost:1234/auth/login
 Content-Type: application/json
 
@@ -46,7 +46,7 @@ Content-Type: application/json
     "contraseña": "12345"
 }
 
-### LOGIN / ADMIN (NO TOKEN OR ROLE REQUIRED)
+### LOGIN / ADMIN 
 POST http://localhost:1234/auth/login
 Content-Type: application/json
 
@@ -55,5 +55,5 @@ Content-Type: application/json
     "contraseña": "1234ABCD"
 }
 
-### LOGOUT (TOKEN REQUIRED, NO ROLE REQUIRED)
+### LOGOUT (TOKEN REQUIRED)
 POST http://localhost:1234/auth/logout
