@@ -9,9 +9,13 @@ import { status404 } from './middlewares/status404.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { chatRouter } from './routes/chat.js';
 import { messageRouter } from './routes/message.js';
+import swaggerDocs from './swagger.js';
 
 
 const app = express();
+
+// * Documentation API
+swaggerDocs(app);
 
 // * Middlewares
 app.use(cookieParser())
@@ -28,6 +32,7 @@ app.use('/publications', publicacionRouter);
 app.use('/comments', commentRouter);
 app.use('/chats', chatRouter);
 app.use('/messages', messageRouter);
+
 
 // * Status 404
 app.use(status404());
