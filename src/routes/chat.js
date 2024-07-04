@@ -3,6 +3,7 @@ import { ChatController } from '../controllers/chat.js';
 import { authRequired } from '../middlewares/validateToken.js';
 import { permsRequired } from '../middlewares/validatePerms.js';
 import { MemberController } from '../controllers/member.js';
+import { MessageController } from '../controllers/message.js';
 
 export const chatRouter = Router();
 
@@ -23,3 +24,9 @@ chatRouter.get('/:id/members', authRequired, MemberController.getAllMembers);
 chatRouter.post('/:id/members', authRequired, MemberController.addMember);
 
 chatRouter.delete('/:id/members/:user', authRequired, MemberController.delete);
+
+// MESSAGES
+
+chatRouter.get('/:id/messages', authRequired, MessageController.getByChat);
+
+chatRouter.post('/:id/messages', authRequired, MessageController.create);
