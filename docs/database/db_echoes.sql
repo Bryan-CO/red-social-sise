@@ -931,6 +931,23 @@ AS
     WHERE MSG.RgStatus = 1;
 
 
+/*  #USU.SEL2 - Mensajes activos por chat
+    -- CALL SP_MSG_SEL2_ActivedByChat (1);
+*/ 
+DELIMITER //
+CREATE PROCEDURE SP_MSG_SEL2_ActivedByChat
+( IN pChat INT )
+BEGIN
+    SELECT BIN_TO_UUID(USU.IdUsuario) IdUsuario, USU.Username, USU.RutaAvatar,
+    MSG.IDMensaje, MSG.Contenido, MSG.DtCreado, MSG.DtAct
+    FROM Mensajes MSG
+    INNER JOIN Usuarios USU 
+    ON USU.IDUsuario = MSG.IdUsuarioRemitente
+    WHERE MSG.RgStatus = 1 AND MSG.IdChat = pChat;
+END //
+DELIMITER;
+
+
 /*  #MSG.INS1 - Registrar Mensaje
     -- CALL SP_MSG_INS1_Registrar (1, 2, 'Tester');
 */
