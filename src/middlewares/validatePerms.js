@@ -1,5 +1,6 @@
 import { ResponseModel } from "../utils/Response.js";
 
+//Middleware que bloquea el acceso si el usuario no es Administrador.
 export const permsRequired = (req, res, next) => {
     const { role } = req.user;
 

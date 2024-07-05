@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { ResponseModel } from "../utils/Response.js";
-
+//Verifica y agrega el usuario autenticado a la solicitud.
 export const authRequired = async (req, res, next) => {
     const cookieName = process.env.NAME_STORAGE_TOKEN_JWT;
     const token = req.cookies[cookieName];

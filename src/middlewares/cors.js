@@ -1,5 +1,7 @@
 import cors from 'cors';
 
+//Configura el middleware de CORS para permitir el acceso a la aplicación 
+//solo desde los orígenes especificados en `ACCEPTED_ORIGINS`.
 
 const ACCEPTED_ORIGINS = [
     'http://localhost:5500',
