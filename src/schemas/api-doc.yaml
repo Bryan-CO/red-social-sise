@@ -1,0 +1,121 @@
+components:
+  schemas:
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the user by UUID
+          example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+        role:
+          type: integer
+          description: The role
+          example: 1
+        username:
+          type: string
+          description: The username by user register
+          example: 10A23Doc
+        nombre:
+          type: string
+          description: The name of user
+          example: Name1 Name2
+        apellidopaterno:
+          type: string
+          description: The last name 1
+          example: LastName1
+        apellidomaterno:
+          type: string
+          description: The last name 2
+          example: LastName2
+        email:
+          type: string
+          description: The email by user
+          example: email@gmail.com
+        contraseña:
+          type: string
+          description: The password flat before hashed
+          example: 12345
+        rutaAvatar:
+          type: string
+          description: The path to the user's avatar
+          example: /images/avatar.jpg
+        RgStatus:
+          oneOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  example: Buffer
+                data:
+                  type: array
+                  items:
+                    type: integer
+              description: The registration status of the user
+            - type: boolean
+              description: The registration status of the user
+        DtCreado:
+          type: string
+          format: date-time
+          description: The creation date of the user record
+        DtAct:
+          type: string
+          format: date-time
+          description: The last update date of the user record
+    UserRequest:
+      type: object
+      properties:
+        role:
+          type: integer
+          description: The role
+          example: 1
+        username:
+          type: string
+          description: The username by user register
+          example: 10A23Doc
+        nombre:
+          type: string
+          description: The name of user
+          example: Name1 Name2
+        apellidopaterno:
+          type: string
+          description: The last name 1
+          example: LastName1
+        apellidomaterno:
+          type: string
+          description: The last name 2
+          example: LastName2
+        email:
+          type: string
+          description: The email by user
+          example: email@gmail.com
+        contraseña:
+          type: string
+          description: The password flat before hashed
+          example: 12345
+        rutaAvatar:
+          type: string
+          description: The path to the user's avatar
+          example: /images/avatar.jpg
+    ChatRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          description: Nombre del chat
+          example: Chat General
+    ChatResponse:
+      type: object
+      properties:
+        idchat: 
+          type: integer
+          description: ID del chat
+          example: 1
+        nombre:
+          type: string
+          description: Nombre del chat
+          example: Chat General
+        DtCreado:
+          type: string
+          format: date-time
+          description: Fecha de la creación del chat
+
