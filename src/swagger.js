@@ -1,12 +1,14 @@
 import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express'
+import swaggerUi from 'swagger-ui-express';
+
+const STORAGE_TOKEN = process.env.NAME_STORAGE_TOKEN_JWT || 'xyz-jwt-access';
 
 const options = {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'Social Network Echoes API',
-        description: "API endpoints for a mini blog services documented on swagger",
+        title: 'Echoes - API para Red Social de Intereses Comunes',
+        description: "API endpoints para una red social de intereses comunes documentado en swagger",
         version: '1.1.0',
       },
       servers: [
@@ -14,11 +16,58 @@ const options = {
           url: "http://localhost:1234/",
           description: "Local server"
         }
+      ],
+      components: {
+        securitySchemes: {
+          AuthJWT: {
+            type: 'apiKey',
+            in: 'cookie',
+            name: STORAGE_TOKEN,
+          },
+        },
+      },
+      security: [
+        {
+          AuthJWT: [],
+        },
+      ],
+      tags: [
+        {
+          name: "Auth",
+          description: "Everything about Authentication.",
+        },
+        {
+          name: "Users",
+          description: "Everything about users.",
+        },
+        {
+          name: "Posts",
+          description: "Everything about posts.",
+        },
+        {
+          name: "Messages",
+          description: "Everything about messages.",
+        },
+        {
+          name: "Reactions",
+          description: "Everything about reactions by post.",
+        },
+        {
+          name: "Chats",
+          description: "Everything about chats.",
+        },
+        {
+          name: "Members",
+          description: "Everything about members by chat.",
+        },
+        {
+          name: "Comments",
+          description: "Everything about comments.",
+        }
       ]
     },
     basePath: "/",
-    // looks for configuration in specified directories
-    apis: ['./src/routes/*.js'],
+    apis: ['./src/routes/*.yaml', './src/schemas/*.yaml'],
   }
 
 const swaggerSpec = swaggerJSDoc(options);
