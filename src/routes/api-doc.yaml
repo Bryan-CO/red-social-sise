@@ -109,33 +109,7 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Usuario registrado correctamente.
         '400':
-          description: Fallo al validar el formato del usuario.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Usuario no fue validado correctamente.
+          $ref: '#/components/responses/SchemaInvalid'
         '500':
           $ref: '#/components/responses/ServerError'
       security: []
@@ -187,33 +161,7 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Usuario y Token verificados.
         '400':
-          description: Fallo al validar el formato del usuario.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Usuario no fue validado correctamente.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           description: Fallo al validar las credenciales del usuario
           content:
@@ -340,33 +288,7 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Usuario creado correctamente!
         '400':
-          description: Fallo al validar el formato del usuario.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Usuario no fue validado correctamente.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -465,33 +387,7 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Usuario actualizado correctamente.
         '400':
-          description: Fallo al validar el formato del usuario.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Usuario no fue validado correctamente.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -714,33 +610,7 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Chat creado correctamente.
         '400':
-          description: Fallo al validar el formato del chat.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Validación fallida.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -848,33 +718,7 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Chat actualizado correctamente.
         '400':
-          description: Fallo al validar el formato del chat.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Validacion fallida.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -1082,33 +926,7 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Miembros obtenidos correctamente
         '400':
-          description: Fallo al validar el formato del chat.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Validacion fallida.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -1318,33 +1136,7 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Mensaje creado correctamente.
         '400':
-          description: Fallo al validar el formato del mensaje.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Validacion fallida.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '500':
@@ -1486,33 +1278,7 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Mensaje actualizado correctamente.
         '400':
-          description: Fallo al validar el formato del mensaje.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 400
-                  data:
-                    type: object
-                    properties: 
-                      details:
-                        oneOf:
-                          - type: string
-                            example: null
-                          - type: array
-                            example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Validacion fallida.
+          $ref: '#/components/responses/SchemaInvalid'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '404':
@@ -1615,3 +1381,6 @@ paths:
                     example: Mensaje no encontrado.
         '500':
           $ref: '#/components/responses/ServerError'
+  # ------------------------------
+  # POSTS
+  # ------------------------------
