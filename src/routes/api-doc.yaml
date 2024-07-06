@@ -1384,3 +1384,284 @@ paths:
   # ------------------------------
   # POSTS
   # ------------------------------
+  /publications:
+    get:
+      tags: 
+        - Posts
+      summary: Obtiene una lista de las publicaciones.
+      description: Recupere una lista de todas las publicaciones de la base de datos.
+      responses:
+        '200':
+          description: Respuesta exitosa con una lista de las publicaciones.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Publicaciones obtenidas correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Posts
+      summary: Crea una nueva publicación.
+      description: Registra una nueva publicación en la base de datos.
+      requestBody:
+        description: Crea una nueva publicación.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+      responses:
+        '201':
+          description: Respuesta exitosa con la publicación creada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Publicación creada correctamente.
+        '400':
+          $ref: '#/components/responses/SchemaInvalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /publications/{id}:
+    get:
+      tags: 
+        - Posts
+      summary: Obtiene una lista de las publicaciones.
+      description: Recupere una lista de todas las publicaciones de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la información de la publicación.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Publicación obtenida correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID de la publicación no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: La publicación no existe.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags: 
+        - Posts
+      summary: Actualiza la publicación.
+      description: Actualiza la información de la publicación especificada.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Actualiza la publicación. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest2'
+        required: true
+      responses:
+        '200':
+          description: Respuesta exitosa con la información de la publicación.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Publicación actualizada correctamente.
+        '400':
+          $ref: '#/components/responses/SchemaInvalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID de la publicación no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: La publicación no existe.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Posts 
+      summary: Elimina la publicación.
+      description:  Elimina la publicación especificada de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la confirmación del evento.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Publicación eliminada correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: ID de la publicación no es válida.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Publicación no encontrada.
+        '500':
+          $ref: '#/components/responses/ServerError'

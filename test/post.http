@@ -2,7 +2,7 @@
 GET http://localhost:1234/publications
 
 ### GET BY ID (TOKEN REQUIRED)
-GET http://localhost:1234/publications/14
+GET http://localhost:1234/publications/1
 
 ### CREATE (TOKEN REQUIRED)
 POST http://localhost:1234/publications

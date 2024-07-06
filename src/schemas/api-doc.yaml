@@ -148,6 +148,41 @@ components:
           type: string
           description: Mensaje que describe el resultado
           example: Internal Server Error
+    UserRequest:
+      type: object
+      properties:
+        role:
+          type: integer
+          description: The role
+          example: 1
+        username:
+          type: string
+          description: The username by user register
+          example: 10A23Doc
+        nombre:
+          type: string
+          description: The name of user
+          example: Name1 Name2
+        apellidopaterno:
+          type: string
+          description: The last name 1
+          example: LastName1
+        apellidomaterno:
+          type: string
+          description: The last name 2
+          example: LastName2
+        email:
+          type: string
+          description: The email by user
+          example: email@gmail.com
+        contraseña:
+          type: string
+          description: The password flat before hashed
+          example: 12345
+        rutaAvatar:
+          type: string
+          description: The path to the user's avatar
+          example: /images/avatar.jpg
     UserResponse:
       type: object
       properties:
@@ -210,41 +245,6 @@ components:
           type: string
           format: date-time
           description: The last update date of the user record
-    UserRequest:
-      type: object
-      properties:
-        role:
-          type: integer
-          description: The role
-          example: 1
-        username:
-          type: string
-          description: The username by user register
-          example: 10A23Doc
-        nombre:
-          type: string
-          description: The name of user
-          example: Name1 Name2
-        apellidopaterno:
-          type: string
-          description: The last name 1
-          example: LastName1
-        apellidomaterno:
-          type: string
-          description: The last name 2
-          example: LastName2
-        email:
-          type: string
-          description: The email by user
-          example: email@gmail.com
-        contraseña:
-          type: string
-          description: The password flat before hashed
-          example: 12345
-        rutaAvatar:
-          type: string
-          description: The path to the user's avatar
-          example: /images/avatar.jpg
     ChatRequest:
       type: object
       properties:
@@ -346,3 +346,70 @@ components:
           type: string
           format: date-time
           description: Fecha de la última edición del mensaje.
+    PostRequest:
+      type: object
+      properties:
+        uuid_usuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        contenido:
+          type: string
+          description: Contenido de la publicación.
+          example: Tester ✅.
+    PostRequest2:
+      type: object
+      properties:
+        contenido:
+          type: string
+          description: Contenido de la publicación.
+          example: Tester ✅.
+    PostResponse:
+      type: object
+      properties:
+        idpublicacion:
+          type: integer
+          description: ID de la publicacion
+          example: 1
+        contenido: 
+          type: string
+          description: Contenido de la publicación.
+          example: Post! 🔥.
+        fecha:
+          type: string
+          format: date-time
+          description: Fecha de la creación de la publicación.
+        cantComentarios:
+          type: integer
+          description: Cantidad de comentarios.
+        idUsuario: 
+          type: string
+          format: uuid
+          description: ID del usuario que creo la publicación.
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: Username1
+        rutaAvatar: 
+          type: string
+          description: Ruta del avatar del usuario.
+          example: /images/username.jpg
+        reacciones:
+          type: array
+          items:
+            schema:
+            type: object
+            properties:
+              idTipoReaccion:
+                type: integer
+                descripcion: ID de la reacción.
+              Nombre:
+                type: string
+                description: Nombre de la reacción.
+                example: Like.
+              Cant:
+                type: integer
+                description: Cantidad de reacciones.
+
