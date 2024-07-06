@@ -27,6 +27,12 @@ components:
         type: integer
       example: 11
   responses:
+    SchemaInvalid:
+      description: Formato de esquema no válido.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Res400'
     Unauthorized:
       description: Sin token de autorización.
       content:
@@ -46,6 +52,30 @@ components:
           schema:
             $ref: '#/components/schemas/Res500'
   schemas:
+    Res400:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: error
+        code:
+          type: integer
+          description: Codigo de estado HTTP.
+          example: 400
+        data:
+          type: object
+          properties: 
+            details:
+              oneOf:
+                - type: string
+                  example: null
+                - type: array
+                  example: []
+        message:
+          type: string
+          description: Mensaje que describe el resultado
+          example: Validación fallida.
     Res401:
       type: object
       properties:
