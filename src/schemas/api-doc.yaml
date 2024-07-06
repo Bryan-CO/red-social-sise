@@ -9,6 +9,15 @@ components:
         type: string
         format: uuid
       example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+    paramUUID2:
+      name: user
+      in: path
+      description: ID del usuario
+      required: true
+      schema: 
+        type: string
+        format: uuid
+      example: b126cb40-2e39-11ef-8238-50ebf6283cbf
     paramID:
       name: id
       in: path
@@ -228,3 +237,31 @@ components:
           type: string
           format: date-time
           description: Fecha de la creación del chat
+    MemberRequest:
+      type: object
+      properties:
+        miembro:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+    MemberResponse:
+      type: object
+      properties:
+        idusuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: Username1
+        rutaAvatar: 
+          type: string
+          description: Ruta del avatar del usuario.
+          example: /images/username.jpg
+        memberSince:
+          type: string
+          format: date-time
+          description: Fecha en la que se unió el usuario al chat.

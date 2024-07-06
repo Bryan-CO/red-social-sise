@@ -539,8 +539,14 @@ paths:
                     description: Codigo de estado HTTP.
                     example: 200
                   data:
-                    type: array
-                    example: []
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
                   message:
                     type: string
                     description: Mensaje que describe el resultado.
@@ -926,8 +932,14 @@ paths:
                     description: Codigo de estado HTTP.
                     example: 200
                   data:
-                    type: array
-                    example: []
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
                   message:
                     type: string
                     description: Mensaje que describe el resultado.
@@ -966,8 +978,245 @@ paths:
                     example: Chat no encontrado.
         '500':
           $ref: '#/components/responses/ServerError'
-
- 
+  # ------------------------------
+  # MEMBERS
+  # ------------------------------
+  /chats/{id}/members:
+    get:
+      tags: 
+        - Chats
+        - Members
+      summary: Obtiene los miembros del chat.
+      description: Recupere los miembros del chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la lista de miembros del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MemberResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Miembros obtenidos correctamente
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del miembro no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: El chat no tiene miembros.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: 
+        - Chats
+        - Members
+      summary: Registra un nuevo miembro al chat.
+      description: Registra un nuevo miembro al chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Agrega un nuevo miembro al chat. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberRequest'
+      responses:
+        '200':
+          description: Respuesta exitosa con la lista de miembros del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MemberResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Miembros obtenidos correctamente
+        '400':
+          description: Fallo al validar el formato del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Validacion fallida.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del miembro no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Miembro no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /chats/{id}/members/{user}:
+    delete: 
+      tags: 
+        - Chats
+        - Members
+      summary: Elimina al miembro del chat.
+      description: Elimina al miembro especificado del chat.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+        - $ref: '#/components/parameters/paramUUID2'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la confirmación del evento.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Miembro eliminado correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: ID del miembro no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Miembro no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
 
 
 
