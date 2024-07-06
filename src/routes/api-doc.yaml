@@ -1463,8 +1463,8 @@ paths:
     get:
       tags: 
         - Posts
-      summary: Obtiene una lista de las publicaciones.
-      description: Recupere una lista de todas las publicaciones de la base de datos.
+      summary: Obtiene la publicación especificada.
+      description: Recupere información de la publicación especificada de la base de datos.
       parameters:
         - $ref: '#/components/parameters/paramID'  
       responses:
@@ -1665,3 +1665,357 @@ paths:
                     example: Publicación no encontrada.
         '500':
           $ref: '#/components/responses/ServerError'
+  # ------------------------------
+  # COMMENTS
+  # ------------------------------
+  /publications/{id}/comments:
+    get:
+      tags:
+        - Comments
+      summary: Obtiene una lista de los comentarios de la publicación.
+      description: Recupere una lista de todos los comentarios de la publicación.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con una lista de comentarios de la publicación.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentsResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Comentarios obtenidos correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Comments
+      summary: Crea un nuevo comentario.
+      description: Agrega un nuevo comentario a la publicación especificada.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Crea un nuevo comentario. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentsRequest'
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa con el comentario creado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 201
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentsResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Comentario creado correctamente.
+        '400':
+          $ref: '#/components/responses/SchemaInvalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /comments/{id}:
+    get:
+      tags: 
+        - Comments
+      summary: Obtiene el comentario especificado.
+      description: Recupere información del comentario especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la información del comentario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentsResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Comentario obtenida correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del comentario no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Comentario no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags:
+        - Comments
+      summary: Actualiza el comentario.
+      description: Actualiza la información del comentario especificado.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Actualiza el comentario. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentsRequest2'
+        required: true
+      responses:
+        '200':
+          description: Respuesta exitosa con la información del comentario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentsResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Comentario actualizado correctamente.
+        '400':
+          $ref: '#/components/responses/SchemaInvalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del comentario no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Comentario no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Comments
+      summary: Elimina el comentario.
+      description:  Elimina el comentario especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses: 
+        '200':
+          description: Respuesta exitosa con la confirmación del evento.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Comentario eliminada correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: ID del comentario no es válida.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Comentario no encontrada.
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /comments/{id}/answers:
+    get:
+      tags:
+        - Comments
+      summary: Obtiene las respuestas del comentario.
+      description:  Recupera una lista de las respuestas del comenterio especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con una lista de respuestas del comentario especificado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentsResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Respuestas obtenidas correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del comentario no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Comentario no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+

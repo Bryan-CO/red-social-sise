@@ -412,4 +412,57 @@ components:
               Cant:
                 type: integer
                 description: Cantidad de reacciones.
+    CommentsRequest:
+      type: object
+      properties:
+        uuid_usuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        contenido:
+          type: string
+          description: Contenido del comentario.
+          example: Tester ✅.
+    CommentsRequest2:
+      type: object
+      properties:
+        contenido:
+          type: string
+          description: Contenido del comentario.
+          example: Tester ✅.
+    CommentsResponse:
+      type: object
+      properties:
+        idComentario:
+          type: integer
+          description: ID del comentario
+          example: 1
+        contenido:
+          type: string
+          description: Contenido del comentario
+          example: Contenido del comentario.
+        DtCreado: 
+          type: string
+          format: date-time
+          description: Fecha de creación del mensaje.
+        cantRespuestas:
+          type: integer
+          description: Cantidad de respuestas del comentario.
+        idRespuesta:
+          type: integer
+          description: ID del comentario que responde.
+        idusuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: Username1
+        rutaAvatar: 
+          type: string
+          description: Ruta del avatar del usuario.
+          example: /images/username.jpg
 
