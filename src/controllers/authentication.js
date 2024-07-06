@@ -57,14 +57,14 @@ export class AuthController {
 
             const userFount = await UserModel.getByUsername({username});
             if(userFount.length === 0) {
-                return res.status(400).json(ResponseModel.error('Credenciales invalidas', 400));
+                return res.status(401).json(ResponseModel.error('Credenciales invalidas', 401));
             }
 
             const { ID, Username, ROL, Contrasena } = userFount[0]; 
 
             const validPassword = await AuthUtil.comparePassword( contraseña, Contrasena );
             if(!validPassword) {
-                return res.status(400).json(ResponseModel.error('Contraseña invalida', 400));
+                return res.status(401).json(ResponseModel.error('Contraseña invalida', 401));
             }
 
             const payload = { id: ID, username: Username, role: ROL }
