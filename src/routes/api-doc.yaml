@@ -588,7 +588,6 @@ paths:
   /users/{id}/chats:
     get:
       tags:
-        - Users
         - Chats
       summary: Obtiene los chats del usuario.
       description:  Recupere los chats donde el usuario especificado es miembro.
@@ -984,7 +983,6 @@ paths:
   /chats/{id}/members:
     get:
       tags: 
-        - Chats
         - Members
       summary: Obtiene los miembros del chat.
       description: Recupere los miembros del chat especificado de la base de datos.
@@ -1048,7 +1046,6 @@ paths:
           $ref: '#/components/responses/ServerError'
     post:
       tags: 
-        - Chats
         - Members
       summary: Registra un nuevo miembro al chat.
       description: Registra un nuevo miembro al chat especificado de la base de datos.
@@ -1147,7 +1144,6 @@ paths:
   /chats/{id}/members/{user}:
     delete: 
       tags: 
-        - Chats
         - Members
       summary: Elimina al miembro del chat.
       description: Elimina al miembro especificado del chat.
@@ -1223,7 +1219,6 @@ paths:
   /chats/{id}/messages:
     get:
       tags: 
-        - Chats
         - Messages
       summary: Obtiene los mensajes del chat.
       description: Recupere los mensajes del chat especificado de la base de datos.
@@ -1287,7 +1282,6 @@ paths:
           $ref: '#/components/responses/ServerError'
     post:
       tags: 
-        - Chats
         - Messages
       summary: Agrega un nuevo mensaje al chat.
       description: Registra un nuevo mensaje al chat especificado de la base de datos.
