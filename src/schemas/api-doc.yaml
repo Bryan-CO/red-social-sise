@@ -1,10 +1,120 @@
 components:
+  parameters:
+    paramUUID:
+      name: id
+      in: path
+      description: ID del usuario
+      required: true
+      schema: 
+        type: string
+        format: uuid
+      example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+    paramID:
+      name: id
+      in: path
+      description: Id del objeto
+      required: true
+      schema: 
+        type: integer
+      example: 11
+  responses:
+    Unauthorized:
+      description: Sin token de autorización.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Res401'
+    Forbidden:
+      description: Acceso no autorizado
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Res403'
+    ServerError:
+      description: Error en el servidor.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Res500'
   schemas:
+    Res401:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: error
+        code:
+          type: integer
+          description: Codigo de estado HTTP.
+          example: 401
+        data:
+          type: object
+          properties: 
+            details:
+              oneOf:
+                - type: string
+                  example: null
+                - type: array
+                  example: []
+        message:
+          type: string
+          description: Mensaje que describe el resultado
+          example: No token provided
+    Res403:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: error
+        code:
+          type: integer
+          description: Codigo de estado HTTP.
+          example: 403
+        data:
+          type: object
+          properties: 
+            details:
+              oneOf:
+                - type: string
+                  example: null
+                - type: array
+                  example: []
+        message:
+          type: string
+          description: Mensaje que describe el resultado
+          example: Acceso no autorizaado.
+    Res500:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+          example: error
+        code:
+          type: integer
+          description: Codigo de estado HTTP.
+          example: 500
+        data:
+          type: object
+          properties: 
+            details:
+              oneOf:
+                - type: string
+                  example: null
+                - type: array
+                  example: []
+        message:
+          type: string
+          description: Mensaje que describe el resultado
+          example: Internal Server Error
     UserResponse:
       type: object
       properties:
         id:
           type: string
+          format: uuid
           description: The auto-generated id of the user by UUID
           example: b126cb40-2e39-11ef-8238-50ebf6283cbf
         role:
@@ -118,4 +228,3 @@ components:
           type: string
           format: date-time
           description: Fecha de la creación del chat
-

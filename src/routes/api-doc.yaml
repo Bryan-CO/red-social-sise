@@ -1,4 +1,274 @@
 paths:
+  # ------------------------------
+  # AUTHORIZE
+  # ------------------------------
+  /auth/generate:
+    post:
+      tags:
+        - Auth
+      summary: Prueba de generacion de JWT.
+      description: Prueba para la validación de la generación de Token JWT.
+      requestBody:
+        description: Crea un modelo de referencia del token. 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id: 
+                  type: integer
+                  example: 1234
+                username: 
+                  type: string
+                  example: ABCDEFJ
+        required: true
+      responses:
+        '200': 
+          description: 'JSON con los datos ingresados y el token'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authId:
+                    type: integer
+                    example: 1234
+                  authUser:
+                    type: string
+                    example: ABCDEFJ
+                  token:
+                    type: string
+                    example: A.B.C
+        '400':
+          description: Fallo al generar el token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 500
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Token no generado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      deprecated: true
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Registra un nuevo usuario.
+      description: Inserta un nuevo usuario en la base de datos.
+      requestBody:
+        description: Registra un nuevo usuario. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa al registrarse el usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 201
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Usuario registrado correctamente.
+        '400':
+          description: Fallo al validar el formato del usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Usuario no fue validado correctamente.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Inicia una sesión.
+      description: Valida las credenciales y genera un token de acceso.
+      requestBody:
+        description: Registra un nuevo usuario. 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Nombre de usuario
+                  example: username1
+                contraseña:
+                  type: string
+                  format: password
+                  description: Contraseña
+                  example: 12345
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa al verificarse las credenciales de acceso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 201
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Usuario y Token verificados.
+        '400':
+          description: Fallo al validar el formato del usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Usuario no fue validado correctamente.
+        '401':
+          description: Fallo al validar las credenciales del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 401
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Credenciales inválidas.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security: []
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Cierra la sesión.
+      description: Elimina los valores de la sesión, incluyendo el token.
+      responses:
+        '200':
+          description: Cierre de sesión exitoso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    example: Cierre de sesión exitoso.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  # ------------------------------
+  # USERS
+  # ------------------------------
   /users:
     get:
       tags:
@@ -30,42 +300,9 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Se listo correctamente
         '401':
-          description: Sin token de autorización.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 401
-                  data:
-                    type: array
-                    example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: No token provided
+          $ref: '#/components/responses/Unauthorized'
         '500':
-          description: Algún error en el servidor.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta
-                    example: 500
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Internal Server Error
+          $ref: '#/components/responses/ServerError'
     post:
       tags:
         - Users
@@ -117,44 +354,23 @@ paths:
                     type: integer
                     description: Codigo de estado HTTP.
                     example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
                   message:
                     type: string
                     description: Mensaje que describe el resultado
                     example: Usuario no fue validado correctamente.
         '401':
-          description: Sin token de autorización.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 401
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: No token provided
+          $ref: '#/components/responses/Unauthorized'
         '500':
-          description: Algún error en el servidor.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta
-                    example: 500
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Internal Server Error  
+          $ref: '#/components/responses/ServerError'
   /users/{id}:
     get:
       tags:
@@ -162,13 +378,7 @@ paths:
       summary: Obtiene al usuario por su UUID.
       description:  Recupere al usuario especificado de la base de datos.
       parameters:
-        - name: id
-          in: path
-          description: ID del usuario 
-          required: true
-          schema: 
-            type: string
-          example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+        - $ref: '#/components/parameters/paramUUID'  
       responses:
         '200':
           description: Respuesta exitosa con la información del usuario.
@@ -194,27 +404,7 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Usuario obtenido correctamente
         '401':
-          description: Sin token de autorización.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 401
-                  data:
-                    type: array
-                    example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: No token provided
+          $ref: '#/components/responses/Unauthorized'
         '404':
           description: ID del usuario no es válido
           content:
@@ -235,33 +425,14 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Usuario no encontrado
         '500':
-          description: Algún error en el servidor.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta
-                    example: 500
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Internal Server Error    
+          $ref: '#/components/responses/ServerError'  
     patch:
       tags:
         - Users
       summary: Actualiza el usuario.
       description: Actualiza la información del usuario especificado.
       parameters:
-        - name: id
-          in: path
-          description: ID del usuario 
-          required: true
-          schema: 
-            type: string
-          example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+        - $ref: '#/components/parameters/paramUUID'  
       requestBody:
         description: Crea un nuevo usuario. 
         content:
@@ -308,29 +479,21 @@ paths:
                     type: integer
                     description: Codigo de estado HTTP.
                     example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
                   message:
                     type: string
                     description: Mensaje que describe el resultado
                     example: Usuario no fue validado correctamente.
         '401':
-          description: Sin token de autorización.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 401
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: No token provided
+          $ref: '#/components/responses/Unauthorized'
         '404':
           description: ID del usuario no es válido
           content:
@@ -351,36 +514,17 @@ paths:
                     description: Mensaje que describe el resultado
                     example: Usuario no encontrado
         '500':
-          description: Algún error en el servidor.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta
-                    example: 500
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Internal Server Error    
+          $ref: '#/components/responses/ServerError'   
     delete:
       tags:
         - Users 
       summary: Elimina al usuario.
       description:  Elimina al usuario especificado de la base de datos.
       parameters:
-        - name: id
-          in: path
-          description: ID del usuario 
-          required: true
-          schema: 
-            type: string
-          example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+        - $ref: '#/components/parameters/paramUUID'  
       responses:
         '200':
-          description: Respuesta exitosa con la información del usuario.
+          description: Respuesta exitosa con la confirmación del evento.
           content:
             application/json:
               schema:
@@ -400,29 +544,11 @@ paths:
                   message:
                     type: string
                     description: Mensaje que describe el resultado.
-                    example: Usuario obtenido correctamente
+                    example: Usuario eliminado correctamente.
         '401':
-          description: Sin token de autorización.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta.
-                    example: error
-                  code:
-                    type: integer
-                    description: Codigo de estado HTTP.
-                    example: 401
-                  data:
-                    type: array
-                    example: []
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: No token provided
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           description: ID del usuario no es válido
           content:
@@ -438,25 +564,21 @@ paths:
                     type: integer
                     description: Codigo de estado HTTP.
                     example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
                   message:
                     type: string
                     description: Mensaje que describe el resultado
                     example: Usuario no encontrado
         '500':
-          description: Algún error en el servidor.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta 
-                    example: 500
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Internal Server Error  
+          $ref: '#/components/responses/ServerError'
   /users/{id}/chats:
     get:
       tags:
@@ -465,13 +587,7 @@ paths:
       summary: Obtiene los chats del usuario.
       description:  Recupere los chats donde el usuario especificado es miembro.
       parameters:
-        - name: id
-          in: path
-          description: ID del usuario 
-          required: true
-          schema: 
-            type: string
-          example: b126cb40-2e39-11ef-8238-50ebf6283cbf
+        - $ref: '#/components/parameters/paramUUID'  
       responses:
         '200':
           description: Respuesta exitosa con una lista de los chats donde el usuario es miembro.
@@ -496,6 +612,8 @@ paths:
                     type: string
                     description: Mensaje que describe el resultado.
                     example: Chats obtenidos correctamente
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '404':
           description: No es miembro de algun chat.
           content:
@@ -516,20 +634,10 @@ paths:
                     description: Mensaje que describe el resultado
                     example: No tiene chats.
         '500':
-          description: Algún error en el servidor.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Estado de la respuesta
-                    example: 500
-                  message:
-                    type: string
-                    description: Mensaje que describe el resultado
-                    example: Internal Server Error 
+          $ref: '#/components/responses/ServerError'
+  # ------------------------------
+  # CHATS
+  # ------------------------------
   /chats:
     get:
       tags:
@@ -561,7 +669,24 @@ paths:
                     description: Mensaje que describe el resultado.
                     example: Chats obtenidos correctamente
         '401':
-          description: Sin token de autorización.
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Chats
+      summary: Crea un nuevo chat.
+      description: Inserta un nuevo chat en la base de datos.
+      requestBody:
+        description: Crea un nuevo chat. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa al crearse el chat.
           content:
             application/json:
               schema:
@@ -569,21 +694,250 @@ paths:
                 properties:
                   status:
                     type: string
-                    description: Estado de la respuesta
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 201
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChatResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Chat creado correctamente.
+        '400':
+          description: Fallo al validar el formato del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
                     example: error
                   code:
                     type: integer
                     description: Codigo de estado HTTP.
-                    example: 401
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Validación fallida.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /chats/{id}:
+    get:
+      tags: 
+        - Chats
+      summary: Obtiene un chat por su ID.
+      description: Recupere el chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la información del Chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChatResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Chat obtenido correctamente
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del chat no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: El chat no existe.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags: 
+        - Chats
+      summary: Actualiza el chat.
+      description: Actualiza la información del chat especificado.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Crea un nuevo chat. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatRequest'
+        required: true
+      responses:
+        '200':
+          description: Respuesta exitosa con la información del Chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChatResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Chat actualizado correctamente.
+        '400':
+          description: Fallo al validar el formato del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Validacion fallida.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del chat no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Chat no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Chats
+      summary: Elimina el chat.
+      description: Elimina el chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la confirmación del evento.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
                   data:
                     type: array
                     example: []
                   message:
                     type: string
-                    description: Mensaje que describe el resultado
-                    example: No token provided
-        '500':
-          description: Algún error en el servidor.
+                    description: Mensaje que describe el resultado.
+                    example: Chat eliminado correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: ID del chat no es válido.
           content:
             application/json:
               schema:
@@ -591,14 +945,27 @@ paths:
                 properties:
                   status:
                     type: string
-                    description: Estado de la respuesta
-                    example: 500
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
                   message:
                     type: string
                     description: Mensaje que describe el resultado
-                    example: Internal Server Error
-
-
+                    example: Chat no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
 
  
 
