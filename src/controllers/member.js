@@ -31,7 +31,7 @@ export class MemberController {
             const members = await MemberModel.addMember({ id, input: result.data});
             if (members.length !== 0) return res.json(ResponseModel.success(members, 'Miembros obtenidos correctamente'));
             
-            res.status(404).json(ResponseModel.error("El chat no tiene miembros", 404));
+            res.status(404).json(ResponseModel.error("Miembro no encontrado", 404));
         } catch (error) {
             next(error);
         }
