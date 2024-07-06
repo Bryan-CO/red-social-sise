@@ -1,5 +1,5 @@
 ### GET ALL BY POST (TOKEN REQUIRED)
-GET http://localhost:1234/publications/2/comments
+GET http://localhost:1234/publications/1/comments
 
 ### GET BY ID (TOKEN REQUIRED)
 GET http://localhost:1234/comments/11

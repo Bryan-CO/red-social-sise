@@ -6,8 +6,10 @@ export class CommentController {
 
     // GET ALL COMMENTS BY PUBLICATION ID
     static async getAll(req, res, next) {
+        const { id } = req.params;
+
         try {
-            const comments = await CommentModel.getAll();
+            const comments = await CommentModel.getAll({ id });
             res.status(200).json(ResponseModel.success(comments, 'Comentarios obtenidos correctamente'));
         } catch (error) {
             next(error)
@@ -36,7 +38,7 @@ export class CommentController {
             const comments = await CommentModel.getAnswerById({ id });
             if (comments.length !== 0) return res.json(ResponseModel.success(comments, 'Respuestas obtenidas correctamente'));
 
-            res.status(404).json(ResponseModel.error("No hay respuestas", 404));
+            res.status(404).json(ResponseModel.error("Comentario no encontrado.", 404));
         } catch (error) {
             next(error)
         }
@@ -48,7 +50,7 @@ export class CommentController {
         const result = validateComment(req.body);
 
         if (result.error) {
-            return res.status(400).json(ResponseModel.error('Validación fallida', 400, JSON.parse(result.error.message)));
+            return res.status(400).json(ResponseModel.error('Validación fallida.', 400, JSON.parse(result.error.message)));
         }
 
         try {
