@@ -4,6 +4,7 @@ import cors from 'cors';
 //solo desde los orígenes especificados en `ACCEPTED_ORIGINS`.
 
 const ACCEPTED_ORIGINS = [
+    'http://localhost:1234',
     'http://localhost:5500',
     'http://localhost:3000',
     'http://redsocial.com.pe'
