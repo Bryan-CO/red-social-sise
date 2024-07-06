@@ -265,3 +265,54 @@ components:
           type: string
           format: date-time
           description: Fecha en la que se unió el usuario al chat.
+    MessageRequest1:
+      type: object
+      properties:
+        uuid_usuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        contenido:
+          type: string
+          description: Contenido del mensaje.
+          example: Tester ✅.
+    MessageRequest2:
+      type: object
+      properties:
+        contenido:
+          type: string
+          description: Contenido del mensaje.
+          example: Tester ✅.
+    MessageResponse:
+      type: object
+      properties:
+        idusuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: Username1
+        rutaAvatar: 
+          type: string
+          description: Ruta del avatar del usuario.
+          example: /images/username.jpg
+        idmensaje:
+          type: integer
+          description: Fecha en la que se unió el usuario al chat.
+          example: 1
+        contenido:
+          type: string
+          description: Contenido del mensaje.
+          example: Tester ✅.
+        DtCreado:
+          type: string
+          format: date-time
+          description: Fecha en la que se creó el mensaje.
+        DtAct:
+          type: string
+          format: date-time
+          description: Fecha de la última edición del mensaje.

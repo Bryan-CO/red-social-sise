@@ -1217,7 +1217,407 @@ paths:
                     example: Miembro no encontrado.
         '500':
           $ref: '#/components/responses/ServerError'
-
-
-
-
+  # ------------------------------
+  # MESSAGES
+  # ------------------------------
+  /chats/{id}/messages:
+    get:
+      tags: 
+        - Chats
+        - Messages
+      summary: Obtiene los mensajes del chat.
+      description: Recupere los mensajes del chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la lista de los mensajes del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Mensajes obtenidos correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del chat no es válido o el chat no cuenta con mensajes activos.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Mensajes no encontrados.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags: 
+        - Chats
+        - Messages
+      summary: Agrega un nuevo mensaje al chat.
+      description: Registra un nuevo mensaje al chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Agrega un nuevo mensaje al chat. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageRequest1'
+      responses:
+        '201':
+          description: Respuesta exitosa con la lista de los mensajes del chat.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Mensaje creado correctamente.
+        '400':
+          description: Fallo al validar el formato del mensaje.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Validacion fallida.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /messages:
+    get:
+      tags: 
+        - Messages
+      summary: Obtiene una lista de los mensajes.
+      description: Recupere una lista de todos los mensajes de la base de datos.
+      responses:
+        '200':
+          description: Respuesta exitosa con una lista de los mensajes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Mensajes obtenidos correctamente
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /messages/{id}:
+    get:
+      tags: 
+        - Messages
+      summary: Obtiene un mensaje por su ID.
+      description: Recupere el mensaje especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la información del mensaje.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Mensaje obtenido correctamente
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del mensaje no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Mensaje no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    patch:
+      tags: 
+        - Messages
+      summary: Actualiza un mensaje.
+      description: Actualiza la información del mensaje especificado.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      requestBody:
+        description: Crea un nuevo chat. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageRequest2'
+        required: true
+      responses:
+        '200':
+          description: Respuesta exitosa con la información del mensaje.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Mensaje actualizado correctamente.
+        '400':
+          description: Fallo al validar el formato del mensaje.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 400
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Validacion fallida.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: ID del mensaje no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Mensaje no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Messages
+      summary: Elimina el chat.
+      description: Elimina el chat especificado de la base de datos.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con la confirmación del evento.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Mensaje eliminado correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: ID del mensaje no es válido.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: Mensaje no encontrado.
+        '500':
+          $ref: '#/components/responses/ServerError'
