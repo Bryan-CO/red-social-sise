@@ -21,11 +21,19 @@ components:
     paramID:
       name: id
       in: path
-      description: Id del objeto
+      description: Id de la entidad.
       required: true
       schema: 
         type: integer
-      example: 11
+      example: 1
+    paramReact:
+      name: reaction
+      in: path
+      description: Id de la reacción.
+      required: true
+      schema: 
+        type: integer
+      example: 1 
   responses:
     SchemaInvalid:
       description: Formato de esquema no válido.
@@ -465,4 +473,54 @@ components:
           type: string
           description: Ruta del avatar del usuario.
           example: /images/username.jpg
-
+    ReactionRequest:
+      type: object
+      properties:
+        user_uuid:
+          type: string
+          format: uuid
+          description: ID del usuario
+        reaction_id:
+          type: integer
+          description: ID del tipo de reacción.
+          example: 1
+    ReactionResponse:
+      type: object
+      properties:
+        idusuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: Username1
+        rutaAvatar: 
+          type: string
+          description: Ruta del avatar del usuario.
+          example: /images/username.jpg
+        idTipoReaccion:
+          type: integer
+          description: ID del tipo de reacción.
+          example: 1
+        nombre:
+          type: string
+          description: Nombre de la reacción.
+          example: Like
+    OnlyDataUser:
+      type: object
+      properties:
+        idusuario:
+          type: string
+          format: uuid
+          description: ID del usuario
+          example: b354cb40-2e39-11ef-8238-50ebf6283cbf
+        username: 
+          type: string
+          description: Nombre de usuario
+          example: Username1
+        rutaAvatar: 
+          type: string
+          description: Ruta del avatar del usuario.
+          example: /images/username.jpg

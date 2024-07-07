@@ -2018,4 +2018,151 @@ paths:
                     example: Comentario no encontrado.
         '500':
           $ref: '#/components/responses/ServerError'
-
+  # ------------------------------
+  # REACTIONS
+  # ------------------------------
+  /publications/{id}/reactions:
+    get:
+      tags:
+        - Reactions
+      summary: Obtiene una lista de los usuarios que reaccionaron a la publicación.
+      description: Recupere una lista de todos los usuarios que reaccionaron a la publicación y cual fue su reacción.
+      parameters:
+        - $ref: '#/components/parameters/paramID'  
+      responses:
+        '200':
+          description: Respuesta exitosa con una lista de reacciones de la publicación.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReactionResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Reacciones obtenidas correctamente.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    post:
+      tags:
+        - Reactions
+      summary: Agrega una nueva reacción a la publicación.
+      description: Agrega la reacción de un usuario específico a la publicación.
+      parameters:
+        - $ref: '#/components/parameters/paramID'
+      requestBody:
+        description: Agrega la reacción de un usuario específico. 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactionRequest'
+        required: true
+      responses:
+        '201':
+          description: Respuesta exitosa con la reacción creada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 201
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReactionResponse'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Reacción creada correctamente.
+        '400':
+          $ref: '#/components/responses/SchemaInvalid'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /publications/{id}/reactions/{reaction}:
+    get: 
+      tags:
+        - Reactions
+      summary: Obtiene una lista de los usuarios que marcaron una reaccion específica.
+      description: Recupera una lista de los usuarios que reaccionaron a la publicación con un tipo de reacción en concreto.
+      parameters:
+        - $ref: '#/components/parameters/paramID'
+        - $ref: '#/components/parameters/paramReact'
+      responses:
+        '200':
+          description: Respuesta exitosa con una lista de usuarios que marcaron la reación especificada.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: success
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OnlyDataUser'
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado.
+                    example: Reacción obtenida correctamente.
+        '404':
+          description: ID de la reacción no es válida.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta.
+                    example: error
+                  code:
+                    type: integer
+                    description: Codigo de estado HTTP.
+                    example: 404
+                  data:
+                    type: object
+                    properties: 
+                      details:
+                        oneOf:
+                          - type: string
+                            example: null
+                          - type: array
+                            example: []
+                  message:
+                    type: string
+                    description: Mensaje que describe el resultado
+                    example: La reacción no existe.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
