@@ -77,7 +77,7 @@ const swaggerDocs = (app) => {
     app.get('/docs.json', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
-    })
+    });
 };
 
 export default swaggerDocs;
